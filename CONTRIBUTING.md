@@ -77,11 +77,48 @@ shipml/
 
 ## Running Tests
 
+ShipML has comprehensive integration tests that verify all model frameworks work correctly.
+
+### Quick Test Run
+
+Use the automated test script:
+
+```bash
+# Make sure you're in the project root
+./run_tests.sh
+```
+
+This will:
+- Activate virtual environment
+- Install all dependencies
+- Run all tests with coverage report
+
 ### Run All Tests
 
 ```bash
 pytest
 ```
+
+### Run Integration Tests Only
+
+These tests download models, test all API endpoints, and cleanup automatically:
+
+```bash
+pytest tests/test_integration.py -v
+```
+
+This tests:
+- ✅ Sklearn models (created on-the-fly)
+- ✅ PyTorch models (created on-the-fly)
+- ✅ HuggingFace models (downloads DistilBERT ~256MB)
+- ⏭️  TensorFlow models (skipped if not installed)
+
+Each test:
+1. Downloads/creates the model
+2. Loads it with ShipML
+3. Tests all endpoints: `/health`, `/info`, `/predict`, `/docs`
+4. Tests error handling
+5. Cleans up (deletes downloaded models)
 
 ### Run with Coverage
 
@@ -105,7 +142,21 @@ pytest tests/test_cli.py::test_version
 ### Run Tests for Specific Framework
 
 ```bash
-pytest tests/test_loaders.py -k sklearn
+pytest tests/test_integration.py::TestSklearnIntegration -v
+pytest tests/test_integration.py::TestPyTorchIntegration -v
+pytest tests/test_integration.py::TestHuggingFaceIntegration -v
+```
+
+### CI/CD Integration
+
+Run before every push to ensure all frameworks work:
+
+```bash
+# Quick check
+pytest tests/test_integration.py --tb=short
+
+# Full check with coverage
+pytest --cov=shipml --cov-report=term-missing
 ```
 
 ---
