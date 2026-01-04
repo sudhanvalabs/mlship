@@ -25,7 +25,9 @@ class ModelLoader(ABC):
         pass
 
     @abstractmethod
-    def predict(self, model: Any, features: Union[List[float], List[List[float]]]) -> Dict[str, Any]:
+    def predict(
+        self, model: Any, features: Union[List[float], List[List[float]]]
+    ) -> Dict[str, Any]:
         """
         Run prediction on input features.
 

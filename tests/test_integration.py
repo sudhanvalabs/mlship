@@ -8,8 +8,6 @@ These tests:
 """
 
 import pytest
-import requests
-import time
 import shutil
 from pathlib import Path
 from fastapi.testclient import TestClient
@@ -26,6 +24,7 @@ try:
 
         def forward(self, x):
             return self.fc(x)
+
 except ImportError:
     SimpleNet = None
 
@@ -42,9 +41,7 @@ class TestSklearnIntegration:
             import joblib
 
             # Create and train model
-            X, y = make_classification(
-                n_samples=100, n_features=10, n_classes=2, random_state=42
-            )
+            X, y = make_classification(n_samples=100, n_features=10, n_classes=2, random_state=42)
             model = RandomForestClassifier(n_estimators=10, random_state=42)
             model.fit(X, y)
 
@@ -343,9 +340,7 @@ class TestHuggingFaceIntegration:
     def test_huggingface_predict_endpoint(self, huggingface_app):
         """Test /predict endpoint with text input."""
         client = TestClient(huggingface_app)
-        response = client.post(
-            "/predict", json={"features": "This product is amazing!"}
-        )
+        response = client.post("/predict", json={"features": "This product is amazing!"})
 
         assert response.status_code == 200
         data = response.json()

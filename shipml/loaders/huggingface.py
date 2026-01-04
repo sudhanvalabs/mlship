@@ -145,9 +145,7 @@ class HuggingFaceLoader(ModelLoader):
 
         return metadata
 
-    def validate_input(
-        self, model: Any, features: Union[str, List[str]]
-    ) -> None:
+    def validate_input(self, model: Any, features: Union[str, List[str]]) -> None:
         """Validate input format."""
         if not isinstance(features, (str, list)):
             raise ValidationError(
@@ -160,7 +158,7 @@ class HuggingFaceLoader(ModelLoader):
             if not all(isinstance(item, str) for item in features):
                 raise ValidationError(
                     "All items in features list must be strings.\n\n"
-                    "Example: {\"features\": [\"Text 1\", \"Text 2\"]}"
+                    'Example: {"features": ["Text 1", "Text 2"]}'
                 )
 
     # Helper methods

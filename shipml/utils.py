@@ -25,9 +25,7 @@ def get_model_size_mb(model_path: Path) -> float:
     return size_bytes / (1024 * 1024)
 
 
-def format_error_message(
-    error_type: str, message: str, suggestion: Union[str, None] = None
-) -> str:
+def format_error_message(error_type: str, message: str, suggestion: Union[str, None] = None) -> str:
     """
     Format a user-friendly error message.
 

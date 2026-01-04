@@ -16,7 +16,8 @@ class PyTorchLoader(ModelLoader):
             import torch
 
             # Load model (CPU only for now)
-            model = torch.load(model_path, map_location="cpu")
+            # weights_only=False is needed for custom model classes
+            model = torch.load(model_path, map_location="cpu", weights_only=False)
 
             # Handle different save formats
             if isinstance(model, dict) and "model_state_dict" in model:
@@ -94,9 +95,7 @@ class PyTorchLoader(ModelLoader):
 
         return metadata
 
-    def validate_input(
-        self, model: Any, features: Union[List[float], List[List[float]]]
-    ) -> None:
+    def validate_input(self, model: Any, features: Union[List[float], List[List[float]]]) -> None:
         """Validate input shape."""
         import torch
 

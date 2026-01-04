@@ -50,13 +50,17 @@ jobs:
       if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
 
   test-frameworks:
-    name: Test ${{ matrix.framework }} on ${{ matrix.os }}
+    name: Test ${{ matrix.framework.name }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        framework: [sklearn, pytorch, tensorflow, huggingface]
+        framework:
+          - { name: sklearn, test: TestSklearnIntegration }
+          - { name: pytorch, test: TestPyTorchIntegration }
+          - { name: tensorflow, test: TestTensorFlowIntegration }
+          - { name: huggingface, test: TestHuggingFaceIntegration }
 
     steps:
     - uses: actions/checkout@v4
@@ -77,19 +81,13 @@ jobs:
       shell: powershell
       if: runner.os == 'Windows'
 
-    - name: Install ShipML with ${{ matrix.framework }}
+    - name: Install ShipML with ${{ matrix.framework.name }}
       run: |
-        uv pip install --system -e ".[${{ matrix.framework }},dev]"
+        uv pip install --system -e ".[${{ matrix.framework.name }},dev]"
 
-    - name: Run ${{ matrix.framework }} tests
+    - name: Run ${{ matrix.framework.name }} tests
       run: |
-        pytest tests/test_integration.py::Test${{ matrix.framework }}Integration -v
-      if: matrix.framework != 'sklearn'
-
-    - name: Run sklearn tests
-      run: |
-        pytest tests/test_integration.py::TestSklearnIntegration -v
-      if: matrix.framework == 'sklearn'
+        pytest tests/test_integration.py::${{ matrix.framework.test }} -v
 
   lint:
     runs-on: ubuntu-latest

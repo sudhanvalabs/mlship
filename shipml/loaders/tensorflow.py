@@ -103,9 +103,7 @@ class TensorFlowLoader(ModelLoader):
 
         return metadata
 
-    def validate_input(
-        self, model: Any, features: Union[List[float], List[List[float]]]
-    ) -> None:
+    def validate_input(self, model: Any, features: Union[List[float], List[List[float]]]) -> None:
         """Validate input shape."""
         import numpy as np
 

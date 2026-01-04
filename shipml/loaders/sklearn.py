@@ -17,6 +17,7 @@ class SklearnLoader(ModelLoader):
             # Try joblib first (recommended for sklearn models)
             try:
                 import joblib
+
                 return joblib.load(model_path)
             except Exception:
                 # Fallback to pickle for models saved with pickle
@@ -57,8 +58,7 @@ class SklearnLoader(ModelLoader):
                 # Multi-class classification
                 if hasattr(model, "classes_"):
                     prob_dict = {
-                        str(cls): float(prob)
-                        for cls, prob in zip(model.classes_, probabilities)
+                        str(cls): float(prob) for cls, prob in zip(model.classes_, probabilities)
                     }
                     return {
                         "prediction": int(prediction),
@@ -95,9 +95,7 @@ class SklearnLoader(ModelLoader):
 
         return metadata
 
-    def validate_input(
-        self, model: Any, features: Union[List[float], List[List[float]]]
-    ) -> None:
+    def validate_input(self, model: Any, features: Union[List[float], List[List[float]]]) -> None:
         """Validate input shape."""
         import numpy as np
 

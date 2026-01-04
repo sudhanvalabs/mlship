@@ -46,10 +46,9 @@ def create_app(model: Any, loader: ModelLoader, model_name: str) -> FastAPI:
 
         class PredictRequest(BaseModel):
             features: Union[str, List[str]] = Field(
-                ...,
-                description="Text input for prediction",
-                examples=["This product is amazing!"]
+                ..., description="Text input for prediction", examples=["This product is amazing!"]
             )
+
     else:
         # Numeric input for sklearn/pytorch/tensorflow
         from shipml.models import PredictRequest

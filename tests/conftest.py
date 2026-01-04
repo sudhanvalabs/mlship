@@ -13,9 +13,7 @@ def sklearn_model_path(tmp_path):
         import joblib
 
         # Create synthetic dataset
-        X, y = make_classification(
-            n_samples=100, n_features=4, n_classes=2, random_state=42
-        )
+        X, y = make_classification(n_samples=100, n_features=4, n_classes=2, random_state=42)
 
         # Train model
         model = RandomForestClassifier(n_estimators=10, random_state=42)

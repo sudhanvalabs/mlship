@@ -40,9 +40,7 @@ def cli(ctx, version):
 @cli.command()
 @click.argument("model_file", type=click.Path(exists=True))
 @click.option("--port", default=8000, type=int, help="Port to run server on (default: 8000)")
-@click.option(
-    "--host", default="127.0.0.1", type=str, help="Host to bind to (default: 127.0.0.1)"
-)
+@click.option("--host", default="127.0.0.1", type=str, help="Host to bind to (default: 127.0.0.1)")
 @click.option("--name", default=None, type=str, help="Model name for display")
 @click.option("--reload", is_flag=True, help="Enable auto-reload on file changes (dev mode)")
 def serve(model_file: str, port: int, host: str, name: str, reload: bool):
@@ -127,10 +125,10 @@ def serve(model_file: str, port: int, host: str, name: str, reload: bool):
             example_features = ", ".join(["1.0"] * min(num_features, 4))
             if num_features > 4:
                 example_features += ", ..."
-            click.echo(f'     -d \'{{"features": [{example_features}]}}\'')
+            click.echo(f"     -d '{{\"features\": [{example_features}]}}'")
         else:
             # Default numeric input
-            click.echo('     -d \'{"features": [1.0, 2.0, 3.0, 4.0]}\'')
+            click.echo("     -d '{\"features\": [1.0, 2.0, 3.0, 4.0]}'")
 
         click.echo()
         click.secho("Press Ctrl+C to stop", fg="yellow")
