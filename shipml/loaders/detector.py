@@ -1,7 +1,6 @@
 """Framework detection and loader factory."""
 
 from pathlib import Path
-from typing import Any
 
 from shipml.errors import UnsupportedModelError
 from shipml.loaders.base import ModelLoader

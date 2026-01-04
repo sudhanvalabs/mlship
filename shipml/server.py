@@ -7,7 +7,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 
 from shipml.loaders.base import ModelLoader
-from shipml.models import PredictRequest, HealthResponse, InfoResponse
+from shipml.models import HealthResponse, InfoResponse
 from shipml.errors import ValidationError
 
 

@@ -9,7 +9,6 @@ These tests:
 
 import pytest
 import shutil
-from pathlib import Path
 from fastapi.testclient import TestClient
 
 

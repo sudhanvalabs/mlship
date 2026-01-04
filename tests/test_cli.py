@@ -1,6 +1,5 @@
 """Tests for CLI."""
 
-import pytest
 from click.testing import CliRunner
 
 from shipml.cli import cli
