@@ -1,0 +1,117 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ['3.9', '3.10', '3.11']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install uv
+      run: |
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+      if: runner.os != 'Windows'
+
+    - name: Install uv (Windows)
+      run: |
+        irm https://astral.sh/uv/install.ps1 | iex
+      shell: powershell
+      if: runner.os == 'Windows'
+
+    - name: Install dependencies
+      run: |
+        uv pip install --system -e ".[dev,all]"
+
+    - name: Run tests
+      run: |
+        pytest tests/ -v --cov=shipml --cov-report=xml --cov-report=term
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage.xml
+        fail_ci_if_error: false
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
+
+  test-frameworks:
+    name: Test ${{ matrix.framework }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        framework: [sklearn, pytorch, tensorflow, huggingface]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install uv
+      run: |
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+      if: runner.os != 'Windows'
+
+    - name: Install uv (Windows)
+      run: |
+        irm https://astral.sh/uv/install.ps1 | iex
+      shell: powershell
+      if: runner.os == 'Windows'
+
+    - name: Install ShipML with ${{ matrix.framework }}
+      run: |
+        uv pip install --system -e ".[${{ matrix.framework }},dev]"
+
+    - name: Run ${{ matrix.framework }} tests
+      run: |
+        pytest tests/test_integration.py::Test${{ matrix.framework }}Integration -v
+      if: matrix.framework != 'sklearn'
+
+    - name: Run sklearn tests
+      run: |
+        pytest tests/test_integration.py::TestSklearnIntegration -v
+      if: matrix.framework == 'sklearn'
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        pip install ruff black mypy
+
+    - name: Check formatting with black
+      run: black --check shipml/ tests/
+
+    - name: Lint with ruff
+      run: ruff check shipml/ tests/
+
+    - name: Type check with mypy
+      run: mypy shipml/
+      continue-on-error: true

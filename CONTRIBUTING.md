@@ -81,17 +81,25 @@ ShipML has comprehensive integration tests that verify all model frameworks work
 
 ### Quick Test Run
 
-Use the automated test script:
-
+**Option 1: Cross-platform Python script (recommended)**
 ```bash
-# Make sure you're in the project root
+# Works on Windows, macOS, and Linux
+python run_tests.py
+```
+
+**Option 2: Bash script (macOS/Linux only)**
+```bash
 ./run_tests.sh
 ```
 
-This will:
-- Activate virtual environment
-- Install all dependencies
+Both scripts will:
+- Check for missing dependencies
+- Install any missing frameworks automatically
 - Run all tests with coverage report
+
+**Platform recommendations:**
+- Windows: Use `python run_tests.py`
+- macOS/Linux: Either script works, but `python run_tests.py` is more portable
 
 ### Run All Tests
 
@@ -158,6 +166,29 @@ pytest tests/test_integration.py --tb=short
 # Full check with coverage
 pytest --cov=shipml --cov-report=term-missing
 ```
+
+### GitHub Actions (Automated Testing)
+
+ShipML uses GitHub Actions to automatically test on **every push** across:
+
+**Platforms:**
+- ✅ Ubuntu (Linux)
+- ✅ Windows
+- ✅ macOS
+
+**Python versions:**
+- ✅ Python 3.9
+- ✅ Python 3.10
+- ✅ Python 3.11
+
+**Frameworks tested:**
+- Individual tests for sklearn, pytorch, tensorflow, huggingface
+- Full integration tests
+- Code linting and formatting checks
+
+The CI workflow is defined in `.github/workflows/test.yml` and runs automatically on every push to ensure cross-platform compatibility.
+
+**Cost:** Free for public repositories (unlimited minutes)
 
 ---
 
