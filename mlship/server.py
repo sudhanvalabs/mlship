@@ -6,9 +6,9 @@ from typing import Any
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 
-from shipml.loaders.base import ModelLoader
-from shipml.models import HealthResponse, InfoResponse
-from shipml.errors import ValidationError
+from mlship.loaders.base import ModelLoader
+from mlship.models import HealthResponse, InfoResponse
+from mlship.errors import ValidationError
 
 
 def create_app(model: Any, loader: ModelLoader, model_name: str, pipeline: Any = None) -> FastAPI:
@@ -66,7 +66,7 @@ def create_app(model: Any, loader: ModelLoader, model_name: str, pipeline: Any =
 
         else:
             # Numeric input for sklearn/pytorch/tensorflow
-            from shipml.models import PredictRequest  # type: ignore[assignment]
+            from mlship.models import PredictRequest  # type: ignore[assignment]
 
     @app.get("/", include_in_schema=False)
     async def root():

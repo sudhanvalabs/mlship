@@ -60,8 +60,8 @@ class TestSklearnIntegration:
     @pytest.fixture
     def sklearn_app(self, sklearn_model):
         """Create FastAPI app for sklearn model."""
-        from shipml.loaders.detector import detect_framework, get_loader
-        from shipml.server import create_app
+        from mlship.loaders.detector import detect_framework, get_loader
+        from mlship.server import create_app
 
         framework = detect_framework(sklearn_model)
         loader = get_loader(framework)
@@ -150,8 +150,8 @@ class TestPyTorchIntegration:
     @pytest.fixture
     def pytorch_app(self, pytorch_model):
         """Create FastAPI app for PyTorch model."""
-        from shipml.loaders.detector import detect_framework, get_loader
-        from shipml.server import create_app
+        from mlship.loaders.detector import detect_framework, get_loader
+        from mlship.server import create_app
 
         framework = detect_framework(pytorch_model)
         loader = get_loader(framework)
@@ -227,8 +227,8 @@ class TestTensorFlowIntegration:
     @pytest.fixture
     def tensorflow_app(self, tensorflow_model):
         """Create FastAPI app for TensorFlow model."""
-        from shipml.loaders.detector import detect_framework, get_loader
-        from shipml.server import create_app
+        from mlship.loaders.detector import detect_framework, get_loader
+        from mlship.server import create_app
 
         framework = detect_framework(tensorflow_model)
         loader = get_loader(framework)
@@ -307,8 +307,8 @@ class TestHuggingFaceIntegration:
     @pytest.fixture
     def huggingface_app(self, huggingface_model):
         """Create FastAPI app for Hugging Face model."""
-        from shipml.loaders.detector import detect_framework, get_loader
-        from shipml.server import create_app
+        from mlship.loaders.detector import detect_framework, get_loader
+        from mlship.server import create_app
 
         framework = detect_framework(huggingface_model)
         loader = get_loader(framework)
@@ -367,7 +367,7 @@ class TestFrameworkDetection:
         try:
             from sklearn.ensemble import RandomForestClassifier
             import joblib
-            from shipml.loaders.detector import detect_framework
+            from mlship.loaders.detector import detect_framework
 
             model = RandomForestClassifier()
             model_path = tmp_path / "test.pkl"
@@ -386,7 +386,7 @@ class TestFrameworkDetection:
         try:
             import torch
             import torch.nn as nn
-            from shipml.loaders.detector import detect_framework
+            from mlship.loaders.detector import detect_framework
 
             model = nn.Linear(10, 2)
             model_path = tmp_path / "test.pt"
@@ -404,7 +404,7 @@ class TestFrameworkDetection:
         """Test TensorFlow model detection."""
         try:
             import tensorflow as tf
-            from shipml.loaders.detector import detect_framework
+            from mlship.loaders.detector import detect_framework
 
             model = tf.keras.Sequential([tf.keras.layers.Dense(1)])
             model_path = tmp_path / "test.h5"
@@ -422,7 +422,7 @@ class TestFrameworkDetection:
         """Test Hugging Face model detection."""
         try:
             from transformers import AutoModelForSequenceClassification, AutoTokenizer
-            from shipml.loaders.detector import detect_framework
+            from mlship.loaders.detector import detect_framework
 
             model_name = "distilbert-base-uncased-finetuned-sst-2-english"
             model_path = tmp_path / "hf_test"

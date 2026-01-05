@@ -8,7 +8,7 @@ Usage:
     python examples/sklearn_example.py
 
     # Serve with pipeline
-    shipml serve fraud_detector.pkl --pipeline examples.pipelines.sklearn_normalization.NormalizationPipeline
+    mlship serve fraud_detector.pkl --pipeline examples.pipelines.sklearn_normalization.NormalizationPipeline
 
 Test:
     curl -X POST http://localhost:8000/predict \
@@ -16,7 +16,7 @@ Test:
       -d '{"features": [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]}'
 """
 
-from shipml.pipeline import Pipeline
+from mlship.pipeline import Pipeline
 import numpy as np
 import json
 from pathlib import Path

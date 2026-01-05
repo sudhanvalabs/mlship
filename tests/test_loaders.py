@@ -2,8 +2,8 @@
 
 import pytest
 
-from shipml.loaders.sklearn import SklearnLoader
-from shipml.errors import ValidationError
+from mlship.loaders.sklearn import SklearnLoader
+from mlship.errors import ValidationError
 
 
 def test_sklearn_loader_load(sklearn_model_path):

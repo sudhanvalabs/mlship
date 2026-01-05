@@ -2,7 +2,7 @@
 
 from click.testing import CliRunner
 
-from shipml.cli import cli
+from mlship.cli import cli
 
 
 def test_version():
@@ -11,7 +11,7 @@ def test_version():
     result = runner.invoke(cli, ["--version"])
 
     assert result.exit_code == 0
-    assert "ShipML version" in result.output
+    assert "mlship version" in result.output
 
 
 def test_help():
@@ -20,7 +20,7 @@ def test_help():
     result = runner.invoke(cli, ["--help"])
 
     assert result.exit_code == 0
-    assert "ShipML" in result.output
+    assert "mlship" in result.output
     assert "serve" in result.output
 
 

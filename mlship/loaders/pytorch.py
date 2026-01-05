@@ -3,8 +3,8 @@
 from pathlib import Path
 from typing import Any, Dict, List, Union
 
-from shipml.errors import ModelLoadError, ValidationError
-from shipml.loaders.base import ModelLoader
+from mlship.errors import ModelLoadError, ValidationError
+from mlship.loaders.base import ModelLoader
 
 
 class PyTorchLoader(ModelLoader):
@@ -41,7 +41,7 @@ class PyTorchLoader(ModelLoader):
             raise ModelLoadError(
                 "PyTorch is not installed.\n\n"
                 "Install with: uv pip install torch\n"
-                "Or: uv pip install shipml[pytorch]"
+                "Or: uv pip install mlship[pytorch]"
             )
         except Exception as e:
             raise ModelLoadError(f"Failed to load PyTorch model: {e}")

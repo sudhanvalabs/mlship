@@ -3,7 +3,7 @@ requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "shipml"
+name = "mlship"
 version = "0.1.0"
 description = "Turn ML models into APIs with one command"
 authors = [{name = "Prabhu Eshwarla", email = "dev@peshwarla.com"}]
@@ -61,7 +61,7 @@ dev = [
 ]
 
 [project.scripts]
-shipml = "shipml.cli:cli"
+mlship = "mlship.cli:cli"
 
 [project.urls]
 Homepage = "https://github.com/prabhueshwarla/shipml"
@@ -71,7 +71,7 @@ Issues = "https://github.com/prabhueshwarla/shipml/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["shipml*"]
+include = ["mlship*"]
 
 [tool.black]
 line-length = 100
@@ -86,14 +86,15 @@ testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-addopts = "-v --cov=shipml --cov-report=term-missing"
+addopts = "-v --cov=mlship --cov-report=term-missing"
 filterwarnings = [
     "ignore::FutureWarning:keras.*",
     "ignore::DeprecationWarning:keras.*",
 ]
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = false
+disable_error_code = ["import-untyped"]

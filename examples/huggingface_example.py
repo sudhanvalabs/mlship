@@ -1,10 +1,10 @@
 """
-Example: Download a Hugging Face model and serve it with ShipML.
+Example: Download a Hugging Face model and serve it with mlship.
 
 This script:
 1. Downloads a pre-trained sentiment analysis model from Hugging Face
 2. Saves it locally
-3. Shows how to serve it with ShipML
+3. Shows how to serve it with mlship
 
 Requirements:
     uv pip install transformers torch
@@ -48,7 +48,7 @@ def main():
     print("🚀 Next steps:")
     print()
     print("   1. Serve your model:")
-    print(f"      shipml serve {save_path}")
+    print(f"      mlship serve {save_path}")
     print()
     print("   2. Test it:")
     print("      curl -X POST http://localhost:8000/predict \\")

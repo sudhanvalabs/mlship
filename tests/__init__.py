@@ -1,1 +1,1 @@
-"""Tests for ShipML."""
+"""Tests for mlship."""

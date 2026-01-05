@@ -1,1 +1,1 @@
-"""ShipML examples."""
+"""mlship examples."""

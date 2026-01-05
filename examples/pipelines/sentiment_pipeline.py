@@ -4,7 +4,7 @@ This shows how to create a custom pipeline for preprocessing and postprocessing.
 
 Usage:
     python examples/huggingface_example.py  # Creates sentiment-model/
-    shipml serve sentiment-model/ --pipeline examples.pipelines.sentiment_pipeline.SentimentPipeline
+    mlship serve sentiment-model/ --pipeline examples.pipelines.sentiment_pipeline.SentimentPipeline
 
 Test:
     curl -X POST http://localhost:8000/predict \
@@ -12,7 +12,7 @@ Test:
       -d '{"text": "This product is amazing!"}'
 """
 
-from shipml.pipeline import Pipeline
+from mlship.pipeline import Pipeline
 
 
 class SentimentPipeline(Pipeline):

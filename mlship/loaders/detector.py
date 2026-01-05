@@ -2,8 +2,8 @@
 
 from pathlib import Path
 
-from shipml.errors import UnsupportedModelError
-from shipml.loaders.base import ModelLoader
+from mlship.errors import UnsupportedModelError
+from mlship.loaders.base import ModelLoader
 
 
 def detect_framework(model_path: Path) -> str:
@@ -74,19 +74,19 @@ def get_loader(framework: str) -> ModelLoader:
         UnsupportedModelError: If framework is not supported
     """
     if framework == "sklearn":
-        from shipml.loaders.sklearn import SklearnLoader
+        from mlship.loaders.sklearn import SklearnLoader
 
         return SklearnLoader()
     elif framework == "pytorch":
-        from shipml.loaders.pytorch import PyTorchLoader
+        from mlship.loaders.pytorch import PyTorchLoader
 
         return PyTorchLoader()
     elif framework == "tensorflow":
-        from shipml.loaders.tensorflow import TensorFlowLoader
+        from mlship.loaders.tensorflow import TensorFlowLoader
 
         return TensorFlowLoader()
     elif framework == "huggingface":
-        from shipml.loaders.huggingface import HuggingFaceLoader
+        from mlship.loaders.huggingface import HuggingFaceLoader
 
         return HuggingFaceLoader()
     elif framework == "xgboost":

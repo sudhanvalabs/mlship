@@ -1,11 +1,11 @@
 """
-Example: Train a PyTorch model and serve it with ShipML.
+Example: Train a PyTorch model and serve it with mlship.
 
 This script:
 1. Creates a simple neural network
 2. Trains it on synthetic data
 3. Saves the full model
-4. Shows how to serve it with ShipML
+4. Shows how to serve it with mlship
 
 Requirements:
     uv pip install torch
@@ -110,7 +110,7 @@ def main():
     print("🚀 Next steps:")
     print()
     print("   1. Serve your model:")
-    print(f"      shipml serve {model_path}")
+    print(f"      mlship serve {model_path}")
     print()
     print("   2. Test it:")
     print("      curl -X POST http://localhost:8000/predict \\")

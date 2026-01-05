@@ -1,15 +1,15 @@
-"""Command-line interface for ShipML."""
+"""Command-line interface for mlship."""
 
 from pathlib import Path
 
 import click
 import uvicorn
 
-from shipml import __version__
-from shipml.errors import UnsupportedModelError, ModelLoadError
-from shipml.loaders import detect_framework, get_loader
-from shipml.server import create_app
-from shipml.utils import get_model_size_mb
+from mlship import __version__
+from mlship.errors import UnsupportedModelError, ModelLoadError
+from mlship.loaders import detect_framework, get_loader
+from mlship.server import create_app
+from mlship.utils import get_model_size_mb
 
 
 @click.group(invoke_without_command=True)
@@ -17,18 +17,18 @@ from shipml.utils import get_model_size_mb
 @click.pass_context
 def cli(ctx, version):
     """
-    ShipML - Turn ML models into APIs with one command.
+    mlship - Turn ML models into APIs with one command.
 
     Examples:
 
-      shipml serve model.pkl
+      mlship serve model.pkl
 
-      shipml serve model.pt --port 5000
+      mlship serve model.pt --port 5000
 
-      shipml serve model.h5 --name "sentiment-analyzer"
+      mlship serve model.h5 --name "sentiment-analyzer"
     """
     if version:
-        click.echo(f"ShipML version {__version__}")
+        click.echo(f"mlship version {__version__}")
         ctx.exit(0)
 
     # If no command is provided, show help
@@ -56,20 +56,20 @@ def serve(model_file: str, port: int, host: str, name: str, pipeline: str, reloa
 
     Examples:
 
-      shipml serve model.pkl
+      mlship serve model.pkl
 
-      shipml serve fraud_detector.pkl --port 5000
+      mlship serve fraud_detector.pkl --port 5000
 
-      shipml serve model.h5 --name "sentiment-analyzer"
+      mlship serve model.h5 --name "sentiment-analyzer"
 
-      shipml serve model.pt --reload  # Development mode
+      mlship serve model.pt --reload  # Development mode
     """
     model_path = Path(model_file)
     model_name = name or model_path.stem
 
     # Display header
     click.echo()
-    click.secho("🚀 ShipML", fg="blue", bold=True)
+    click.secho("🚀 mlship", fg="blue", bold=True)
     click.echo(f"   Loading model: {model_path.name}")
     click.echo()
 
@@ -136,7 +136,7 @@ def serve(model_file: str, port: int, host: str, name: str, pipeline: str, reloa
                 click.echo()
                 click.echo("Pipeline class should:")
                 click.echo("  1. Be in format 'module.ClassName'")
-                click.echo("  2. Inherit from shipml.pipeline.Pipeline")
+                click.echo("  2. Inherit from mlship.pipeline.Pipeline")
                 click.echo("  3. Implement preprocess() and postprocess() methods")
                 raise click.Abort()
 

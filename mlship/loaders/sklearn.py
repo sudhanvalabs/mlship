@@ -4,8 +4,8 @@ import pickle
 from pathlib import Path
 from typing import Any, Dict, List, Union
 
-from shipml.errors import ModelLoadError, ValidationError
-from shipml.loaders.base import ModelLoader
+from mlship.errors import ModelLoadError, ValidationError
+from mlship.loaders.base import ModelLoader
 
 
 class SklearnLoader(ModelLoader):

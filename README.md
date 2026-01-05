@@ -1,9 +1,9 @@
-# ShipML
+# mlship
 
 **Turn any ML model into a REST API with one command.**
 
 ```bash
-shipml serve model.pkl
+mlship serve model.pkl
 ```
 
 Deploy your machine learning models locally in seconds—no Docker, no YAML, no configuration files.
@@ -32,21 +32,21 @@ Deploy your machine learning models locally in seconds—no Docker, no YAML, no 
 **macOS / Linux:**
 ```bash
 # Using pip (recommended)
-pip install shipml
+pip install mlship
 
 # Using uv (faster alternative)
 curl -LsSf https://astral.sh/uv/install.sh | sh
-uv pip install shipml
+uv pip install mlship
 ```
 
 **Windows:**
 ```powershell
 # Using pip (recommended)
-pip install shipml
+pip install mlship
 
 # Using uv (faster alternative)
 powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
-uv pip install shipml
+uv pip install mlship
 ```
 
 ### Your First API
@@ -64,7 +64,7 @@ python
 >>> exit()
 
 # 2. Serve it
-shipml serve model.pkl
+mlship serve model.pkl
 
 # 3. Test it (in another terminal)
 curl -X POST http://localhost:8000/predict \
@@ -85,10 +85,10 @@ Open http://localhost:8000/docs in your browser for Swagger UI with interactive 
 
 | Framework | File Extensions | Example |
 |-----------|----------------|---------|
-| **Scikit-learn** | `.pkl`, `.joblib` | `shipml serve model.pkl` |
-| **PyTorch** | `.pt`, `.pth` | `shipml serve model.pt` |
-| **TensorFlow/Keras** | `.h5`, `.keras`, `SavedModel/` | `shipml serve model.h5` |
-| **Hugging Face** | Model directory | `shipml serve sentiment-model/` |
+| **Scikit-learn** | `.pkl`, `.joblib` | `mlship serve model.pkl` |
+| **PyTorch** | `.pt`, `.pth` | `mlship serve model.pt` |
+| **TensorFlow/Keras** | `.h5`, `.keras`, `SavedModel/` | `mlship serve model.h5` |
+| **Hugging Face** | Model directory | `mlship serve sentiment-model/` |
 | **XGBoost** | `.json`, `.pkl` | Coming soon |
 | **LightGBM** | `.txt`, `.pkl` | Coming soon |
 
@@ -103,20 +103,20 @@ Open http://localhost:8000/docs in your browser for Swagger UI with interactive 
 # Install uv (recommended)
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Install ShipML
-uv pip install shipml
+# Install mlship
+uv pip install mlship
 
 # For specific frameworks
-uv pip install shipml[sklearn]      # Scikit-learn
-uv pip install shipml[pytorch]      # PyTorch
-uv pip install shipml[tensorflow]   # TensorFlow
-uv pip install shipml[huggingface]  # Hugging Face
-uv pip install shipml[all]          # All frameworks
+uv pip install mlship[sklearn]      # Scikit-learn
+uv pip install mlship[pytorch]      # PyTorch
+uv pip install mlship[tensorflow]   # TensorFlow
+uv pip install mlship[huggingface]  # Hugging Face
+uv pip install mlship[all]          # All frameworks
 ```
 
 **Usage:**
 ```bash
-shipml serve model.pkl
+mlship serve model.pkl
 # Server runs at http://127.0.0.1:8000
 ```
 
@@ -131,8 +131,8 @@ sudo apt install python3 python3-pip
 # Install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Install ShipML
-uv pip install shipml[all]
+# Install mlship
+uv pip install mlship[all]
 ```
 
 **RHEL/CentOS/Fedora:**
@@ -143,8 +143,8 @@ sudo dnf install python3 python3-pip
 # Install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Install ShipML
-uv pip install shipml[all]
+# Install mlship
+uv pip install mlship[all]
 ```
 
 ### Windows
@@ -156,13 +156,13 @@ uv pip install shipml[all]
 # Install uv
 powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 
-# Install ShipML
-uv pip install shipml[all]
+# Install mlship
+uv pip install mlship[all]
 ```
 
 **Usage:**
 ```powershell
-shipml serve model.pkl
+mlship serve model.pkl
 # Server runs at http://127.0.0.1:8000
 ```
 
@@ -238,36 +238,36 @@ Interactive API documentation (Swagger UI).
 ### Custom Port
 
 ```bash
-shipml serve model.pkl --port 5000
+mlship serve model.pkl --port 5000
 ```
 
 ### Custom Host
 
 ```bash
-shipml serve model.pkl --host 0.0.0.0  # Allow external connections
+mlship serve model.pkl --host 0.0.0.0  # Allow external connections
 ```
 
 ### Custom Model Name
 
 ```bash
-shipml serve model.pkl --name "fraud-detector"
+mlship serve model.pkl --name "fraud-detector"
 ```
 
 ### Development Mode (Auto-reload)
 
 ```bash
-shipml serve model.pkl --reload
+mlship serve model.pkl --reload
 ```
 
 ### Custom Preprocessing/Postprocessing Pipelines
 
 **What are pipelines?**
 
-By default, ShipML expects models to receive data in a standard format and returns predictions as-is. But real-world ML deployments often need:
+By default, mlship expects models to receive data in a standard format and returns predictions as-is. But real-world ML deployments often need:
 - **Preprocessing**: Normalization, feature engineering, text extraction, scaling
 - **Postprocessing**: Custom formatting, thresholds, business logic, metadata
 
-Pipelines let you inject custom logic before and after model prediction without modifying ShipML's code.
+Pipelines let you inject custom logic before and after model prediction without modifying mlship's code.
 
 **How it works:**
 
@@ -292,7 +292,7 @@ User Request → Pipeline.preprocess() → Model.predict() → Pipeline.postproc
 
 ```python
 # my_pipeline.py
-from shipml.pipeline import Pipeline
+from mlship.pipeline import Pipeline
 import numpy as np
 
 class NormalizationPipeline(Pipeline):
@@ -317,7 +317,7 @@ class NormalizationPipeline(Pipeline):
 
 ```python
 # sentiment_pipeline.py
-from shipml.pipeline import Pipeline
+from mlship.pipeline import Pipeline
 
 class SentimentPipeline(Pipeline):
     def preprocess(self, request_data):
@@ -337,7 +337,7 @@ class SentimentPipeline(Pipeline):
 
 ```bash
 # Serve with custom pipeline
-shipml serve model.pkl --pipeline my_pipeline.NormalizationPipeline
+mlship serve model.pkl --pipeline my_pipeline.NormalizationPipeline
 
 # Test with custom input format
 curl -X POST http://localhost:8000/predict \
@@ -361,7 +361,7 @@ curl -X POST http://localhost:8000/predict \
 
 ## Hugging Face Models
 
-ShipML supports Hugging Face Transformers for NLP tasks.
+mlship supports Hugging Face Transformers for NLP tasks.
 
 ### Download and Serve
 
@@ -380,7 +380,7 @@ tokenizer.save_pretrained("./sentiment-model")
 
 ```bash
 # Serve it
-shipml serve sentiment-model/
+mlship serve sentiment-model/
 ```
 
 ### Test with Text
@@ -418,13 +418,13 @@ curl -X POST http://localhost:8000/predict \
 
 ### Built-in Optimizations
 
-ShipML includes sensible defaults that work out-of-the-box:
+mlship includes sensible defaults that work out-of-the-box:
 - ✅ **Batch processing** - All loaders support batch inputs efficiently
 - ✅ **Model eval mode** - PyTorch models loaded with `model.eval()`
 - ✅ **CPU-optimized** - HuggingFace uses CPU-optimized pipelines
 - ✅ **Framework defaults** - Leverages sklearn, PyTorch, TensorFlow optimizations
 
-**Note:** ShipML is "demo-ready," not production-ready. We intentionally avoid advanced optimizations (quantization, GPU acceleration, advanced batching) to maintain simplicity. For production deployments, consider tools like TorchServe, vLLM, or Triton.
+**Note:** mlship is "demo-ready," not production-ready. We intentionally avoid advanced optimizations (quantization, GPU acceleration, advanced batching) to maintain simplicity. For production deployments, consider tools like TorchServe, vLLM, or Triton.
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for design decisions and when to graduate to production tools.
 
@@ -441,7 +441,7 @@ Check the `examples/` directory:
 ```bash
 # Run an example
 python examples/sklearn_example.py
-shipml serve fraud_detector.pkl
+mlship serve fraud_detector.pkl
 ```
 
 ---
@@ -470,17 +470,17 @@ shipml serve fraud_detector.pkl
 
 ## Troubleshooting
 
-### "Command not found: shipml"
+### "Command not found: mlship"
 
-Make sure ShipML is installed and in your PATH:
+Make sure mlship is installed and in your PATH:
 
 ```bash
-pip install shipml
+pip install mlship
 # or
-uv pip install shipml
+uv pip install mlship
 
 # Verify installation
-shipml --version
+mlship --version
 ```
 
 ### "Framework not detected"
@@ -512,7 +512,7 @@ curl http://localhost:8000/info
 Use a different port:
 
 ```bash
-shipml serve model.pkl --port 8001
+mlship serve model.pkl --port 8001
 ```
 
 ---

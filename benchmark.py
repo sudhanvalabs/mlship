@@ -33,14 +33,14 @@ def benchmark_sklearn():
 
     # Framework detection
     start = time.time()
-    from shipml.loaders import detect_framework
+    from mlship.loaders import detect_framework
     framework = detect_framework(model_path)
     detect_time = time.time() - start
     print(f"   Framework detection: {detect_time*1000:.2f}ms ({framework})")
 
     # Model loading
     start = time.time()
-    from shipml.loaders import get_loader
+    from mlship.loaders import get_loader
     loader = get_loader(framework)
     loaded_model = loader.load(model_path)
     load_time = time.time() - start
@@ -54,7 +54,7 @@ def benchmark_sklearn():
 
     # FastAPI app creation
     start = time.time()
-    from shipml.server import create_app
+    from mlship.server import create_app
     app = create_app(loaded_model, loader, "test_model")
     app_time = time.time() - start
     print(f"   FastAPI app creation: {app_time*1000:.2f}ms")
@@ -115,7 +115,7 @@ def benchmark_huggingface():
 
     # Framework detection
     start = time.time()
-    from shipml.loaders import detect_framework
+    from mlship.loaders import detect_framework
     framework = detect_framework(model_path)
     detect_time = time.time() - start
     print(f"   Framework detection: {detect_time*1000:.2f}ms ({framework})")
@@ -123,7 +123,7 @@ def benchmark_huggingface():
     # Model loading (THIS IS THE BOTTLENECK)
     print("   Model loading... (this takes ~10 seconds)")
     start = time.time()
-    from shipml.loaders import get_loader
+    from mlship.loaders import get_loader
     loader = get_loader(framework)
     loaded_model = loader.load(model_path)
     load_time = time.time() - start
@@ -137,7 +137,7 @@ def benchmark_huggingface():
 
     # FastAPI app creation
     start = time.time()
-    from shipml.server import create_app
+    from mlship.server import create_app
     app = create_app(loaded_model, loader, "sentiment-model")
     app_time = time.time() - start
     print(f"   FastAPI app creation: {app_time*1000:.2f}ms")

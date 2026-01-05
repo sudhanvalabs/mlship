@@ -1,6 +1,6 @@
 """Simple test pipeline without dependencies."""
 
-from shipml.pipeline import Pipeline
+from mlship.pipeline import Pipeline
 
 
 class SimplePipeline(Pipeline):

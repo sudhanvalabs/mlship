@@ -1,4 +1,4 @@
-"""Example pipelines for ShipML.
+"""Example pipelines for mlship.
 
 Note: Pipeline classes are imported dynamically to avoid dependency issues.
 Import the specific pipeline you need directly:

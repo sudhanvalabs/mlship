@@ -1,12 +1,12 @@
-# ShipML Architecture & Design Decisions
+# mlship Architecture & Design Decisions
 
-This document explains ShipML's architecture, design philosophy, and key technical decisions.
+This document explains mlship's architecture, design philosophy, and key technical decisions.
 
 ## Design Philosophy
 
-**ShipML is "demo-ready," not production-ready.**
+**mlship is "demo-ready," not production-ready.**
 
-The core principle is **simplicity over optimization**. ShipML is designed for:
+The core principle is **simplicity over optimization**. mlship is designed for:
 - Students demoing ML projects
 - Data scientists prototyping locally
 - Educators teaching API concepts
@@ -20,9 +20,9 @@ It is **not** designed for:
 
 ## Performance & Optimization
 
-### What ShipML Already Optimizes
+### What mlship Already Optimizes
 
-ShipML includes sensible defaults and optimizations that work out-of-the-box:
+mlship includes sensible defaults and optimizations that work out-of-the-box:
 
 1. **Batch Processing**
    - All loaders support batch inputs (`List[List[float]]` or `List[str]`)
@@ -45,7 +45,7 @@ ShipML includes sensible defaults and optimizations that work out-of-the-box:
    - TensorFlow's eager execution optimizations
    - HuggingFace pipeline's built-in KV caching
 
-### What ShipML Explicitly Doesn't Do
+### What mlship Explicitly Doesn't Do
 
 We **intentionally avoid** advanced optimizations to maintain simplicity:
 
@@ -70,7 +70,7 @@ We **intentionally avoid** advanced optimizations to maintain simplicity:
 **Why we don't include it:**
 - Already handled by HuggingFace `transformers.pipeline()` by default
 - Only critical for long conversational sequences (chatbots, streaming)
-- ShipML focuses on single-shot predictions, not stateful conversations
+- mlship focuses on single-shot predictions, not stateful conversations
 - Adds complexity for minimal benefit in demo scenarios
 
 **When to use it:** Production LLM serving with streaming or chat
@@ -94,7 +94,7 @@ We **intentionally avoid** advanced optimizations to maintain simplicity:
 **What it is:** Keeping models in memory across requests, connection pooling, etc.
 
 **Why we don't include it:**
-- ShipML uses uvicorn which handles this at the ASGI level
+- mlship uses uvicorn which handles this at the ASGI level
 - Model is loaded once at startup, not per request
 - Simple single-process model is easier to reason about
 - Advanced caching (Redis, etc.) is production concern
@@ -131,7 +131,7 @@ If you need any of these, consider using specialized serving tools:
 ### Component Structure
 
 ```
-shipml/
+mlship/
 ├── cli.py              # CLI entry point (Click)
 ├── server.py           # FastAPI app generator
 ├── loaders/            # Framework-specific loaders
@@ -148,7 +148,7 @@ shipml/
 
 ### Request Flow
 
-1. **CLI** (`shipml serve model.pkl`)
+1. **CLI** (`mlship serve model.pkl`)
    - Detects framework from file extension
    - Loads model using appropriate loader
    - Creates FastAPI app with model embedded
@@ -186,7 +186,7 @@ Custom pipelines wrap model prediction with pre/post processing:
 - `preprocess()` - Transform API request → model input
 - `postprocess()` - Transform model output → API response
 
-**Why:** Allows users to add custom logic without modifying ShipML code
+**Why:** Allows users to add custom logic without modifying mlship code
 
 #### 3. Factory Pattern (Server Creation)
 
@@ -212,7 +212,7 @@ Custom pipelines wrap model prediction with pre/post processing:
 
 ### 2. Why No Database?
 
-**Decision:** ShipML is stateless - no DB, no caching layer, no session storage
+**Decision:** mlship is stateless - no DB, no caching layer, no session storage
 
 **Rationale:**
 - Adds complexity and dependencies
@@ -226,7 +226,7 @@ Custom pipelines wrap model prediction with pre/post processing:
 
 **Rationale:**
 - Works on any machine (no CUDA required)
-- Installation is simple (`pip install shipml`)
+- Installation is simple (`pip install mlship`)
 - Most demo/testing scenarios don't need GPU
 - Avoids GPU driver/version hell
 - Maintains "works offline" guarantee
@@ -255,12 +255,12 @@ Custom pipelines wrap model prediction with pre/post processing:
 
 ### Potential Features (Aligned with Philosophy)
 
-✅ **These fit ShipML's mission:**
+✅ **These fit mlship's mission:**
 - GPU support (optional flag: `--device gpu`)
 - Batch prediction endpoint (`/predict/batch`)
 - Model versioning (serve multiple versions)
 - Basic metrics endpoint (`/metrics`)
-- Docker deployment option (`shipml docker model.pkl`)
+- Docker deployment option (`mlship docker model.pkl`)
 
 ❌ **These don't fit (too complex):**
 - Multi-model serving

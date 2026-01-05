@@ -3,8 +3,8 @@
 from pathlib import Path
 from typing import Any, Dict, List, Union
 
-from shipml.errors import ModelLoadError, ValidationError
-from shipml.loaders.base import ModelLoader
+from mlship.errors import ModelLoadError, ValidationError
+from mlship.loaders.base import ModelLoader
 
 
 class TensorFlowLoader(ModelLoader):
@@ -33,7 +33,7 @@ class TensorFlowLoader(ModelLoader):
             raise ModelLoadError(
                 "TensorFlow is not installed.\n\n"
                 "Install with: uv pip install tensorflow\n"
-                "Or: uv pip install shipml[tensorflow]"
+                "Or: uv pip install mlship[tensorflow]"
             )
         except Exception as e:
             raise ModelLoadError(f"Failed to load TensorFlow model: {e}")

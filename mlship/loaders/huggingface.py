@@ -7,8 +7,8 @@ Add this to Phase 1 if Hugging Face support is critical for launch.
 from pathlib import Path
 from typing import Any, Dict, List, Union
 
-from shipml.errors import ModelLoadError, ValidationError
-from shipml.loaders.base import ModelLoader
+from mlship.errors import ModelLoadError, ValidationError
+from mlship.loaders.base import ModelLoader
 
 
 class HuggingFaceLoader(ModelLoader):
@@ -53,7 +53,7 @@ class HuggingFaceLoader(ModelLoader):
                     "  model.save_pretrained('my-model/')\n"
                     "  tokenizer.save_pretrained('my-model/')\n\n"
                     "Then serve:\n"
-                    "  shipml serve my-model/"
+                    "  mlship serve my-model/"
                 )
 
             config_file = model_path / "config.json"
@@ -78,7 +78,7 @@ class HuggingFaceLoader(ModelLoader):
                 "Install with:\n"
                 "  uv pip install transformers\n"
                 "Or:\n"
-                "  uv pip install shipml[huggingface]"
+                "  uv pip install mlship[huggingface]"
             )
         except Exception as e:
             raise ModelLoadError(f"Failed to load Hugging Face model: {e}")

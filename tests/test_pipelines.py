@@ -4,7 +4,7 @@ import pytest
 import shutil
 from fastapi.testclient import TestClient
 
-from shipml.pipeline import Pipeline
+from mlship.pipeline import Pipeline
 
 
 # Define PyTorch model at module level (can't pickle local classes)
@@ -102,8 +102,8 @@ class TestSklearnPipeline:
     @pytest.fixture
     def sklearn_app_with_pipeline(self, sklearn_model, sklearn_pipeline):
         """Create FastAPI app with sklearn pipeline."""
-        from shipml.loaders.detector import detect_framework, get_loader
-        from shipml.server import create_app
+        from mlship.loaders.detector import detect_framework, get_loader
+        from mlship.server import create_app
 
         framework = detect_framework(sklearn_model)
         loader = get_loader(framework)
@@ -219,8 +219,8 @@ class TestPyTorchPipeline:
     @pytest.fixture
     def pytorch_app_with_pipeline(self, pytorch_model, pytorch_pipeline):
         """Create FastAPI app with PyTorch pipeline."""
-        from shipml.loaders.detector import detect_framework, get_loader
-        from shipml.server import create_app
+        from mlship.loaders.detector import detect_framework, get_loader
+        from mlship.server import create_app
 
         framework = detect_framework(pytorch_model)
         loader = get_loader(framework)
@@ -346,8 +346,8 @@ class TestTensorFlowPipeline:
     @pytest.fixture
     def tensorflow_app_with_pipeline(self, tensorflow_model, tensorflow_pipeline):
         """Create FastAPI app with TensorFlow pipeline."""
-        from shipml.loaders.detector import detect_framework, get_loader
-        from shipml.server import create_app
+        from mlship.loaders.detector import detect_framework, get_loader
+        from mlship.server import create_app
 
         framework = detect_framework(tensorflow_model)
         loader = get_loader(framework)
@@ -462,8 +462,8 @@ class TestHuggingFacePipeline:
     @pytest.fixture
     def huggingface_app_with_pipeline(self, huggingface_model, huggingface_pipeline):
         """Create FastAPI app with HuggingFace pipeline."""
-        from shipml.loaders.detector import detect_framework, get_loader
-        from shipml.server import create_app
+        from mlship.loaders.detector import detect_framework, get_loader
+        from mlship.server import create_app
 
         framework = detect_framework(huggingface_model)
         loader = get_loader(framework)
@@ -598,8 +598,8 @@ class TestPipelineErrorHandling:
 
     def test_preprocess_error_handling(self, sklearn_model):
         """Test error handling when preprocessing fails."""
-        from shipml.loaders.detector import detect_framework, get_loader
-        from shipml.server import create_app
+        from mlship.loaders.detector import detect_framework, get_loader
+        from mlship.server import create_app
 
         framework = detect_framework(sklearn_model)
         loader = get_loader(framework)
@@ -618,8 +618,8 @@ class TestPipelineErrorHandling:
 
     def test_postprocess_error_handling(self, sklearn_model):
         """Test error handling when postprocessing fails."""
-        from shipml.loaders.detector import detect_framework, get_loader
-        from shipml.server import create_app
+        from mlship.loaders.detector import detect_framework, get_loader
+        from mlship.server import create_app
 
         framework = detect_framework(sklearn_model)
         loader = get_loader(framework)

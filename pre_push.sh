@@ -8,9 +8,9 @@ echo ""
 
 # Format check
 echo "1️⃣  Checking code formatting..."
-.venv/bin/black --check shipml/ tests/ || {
+.venv/bin/black --check mlship/ tests/ || {
     echo "❌ Code formatting failed!"
-    echo "   Run: .venv/bin/black shipml/ tests/"
+    echo "   Run: .venv/bin/black mlship/ tests/"
     exit 1
 }
 echo "✅ Formatting OK"
@@ -18,9 +18,9 @@ echo ""
 
 # Lint check
 echo "2️⃣  Linting code..."
-.venv/bin/ruff check shipml/ tests/ || {
+.venv/bin/ruff check mlship/ tests/ || {
     echo "❌ Linting failed!"
-    echo "   Run: .venv/bin/ruff check --fix shipml/ tests/"
+    echo "   Run: .venv/bin/ruff check --fix mlship/ tests/"
     exit 1
 }
 echo "✅ Linting OK"
@@ -28,7 +28,7 @@ echo ""
 
 # Type check (allow to fail)
 echo "3️⃣  Type checking..."
-.venv/bin/mypy shipml/ || echo "⚠️  Type check warnings (non-blocking)"
+.venv/bin/mypy mlship/ || echo "⚠️  Type check warnings (non-blocking)"
 echo ""
 
 # Run tests

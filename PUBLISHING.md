@@ -1,6 +1,6 @@
-# Publishing ShipML to PyPI
+# Publishing mlship to PyPI
 
-This guide explains how to publish ShipML to PyPI so users can install it with `pip install shipml`.
+This guide explains how to publish mlship to PyPI so users can install it with `pip install mlship`.
 
 ## Prerequisites
 
@@ -48,8 +48,8 @@ rm -rf dist/ build/ *.egg-info
 ```
 
 This creates:
-- `dist/shipml-X.X.X.tar.gz` (source distribution)
-- `dist/shipml-X.X.X-py3-none-any.whl` (wheel)
+- `dist/mlship-X.X.X.tar.gz` (source distribution)
+- `dist/mlship-X.X.X-py3-none-any.whl` (wheel)
 
 ## Step 3: Test on TestPyPI First
 
@@ -71,11 +71,11 @@ python3 -m venv test_env
 source test_env/bin/activate
 
 # Install from TestPyPI
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple shipml
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple mlship
 
 # Test it works
-shipml --version
-shipml serve examples/sklearn_example.py  # If you have a test model
+mlship --version
+mlship serve examples/sklearn_example.py  # If you have a test model
 
 # Clean up
 deactivate
@@ -98,17 +98,17 @@ Once testing passes, publish to real PyPI:
 
 ```bash
 # In a fresh environment
-pip install shipml
+pip install mlship
 
 # Test
-shipml --version
+mlship --version
 ```
 
 ## Step 6: Create GitHub Release
 
-1. Go to https://github.com/prabhueshwarla/shipml/releases/new
+1. Go to https://github.com/prabhueshwarla/mlship/releases/new
 2. Choose the tag you created (v0.1.0)
-3. Title: "ShipML v0.1.0"
+3. Title: "mlship v0.1.0"
 4. Description: Copy from CHANGELOG.md (see below)
 5. Attach the dist files (optional)
 6. Publish release
@@ -156,7 +156,7 @@ Then upload without prompts:
 - [ ] Package built (`python -m build`)
 - [ ] Tested on TestPyPI
 - [ ] Published to PyPI
-- [ ] Tested installation (`pip install shipml`)
+- [ ] Tested installation (`pip install mlship`)
 - [ ] GitHub release created
 - [ ] Announcement posted (Twitter, Reddit, HN)
 
@@ -187,7 +187,7 @@ Examples:
 ### "Package name already taken"
 - Someone else owns the name on PyPI
 - Choose a different name in `pyproject.toml`
-- Check availability: https://pypi.org/project/shipml/
+- Check availability: https://pypi.org/project/mlship/
 
 ### "README rendering failed"
 - Check README with: `.venv/bin/twine check dist/*`
