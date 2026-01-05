@@ -259,6 +259,47 @@ shipml serve model.pkl --name "fraud-detector"
 shipml serve model.pkl --reload
 ```
 
+### Custom Preprocessing/Postprocessing Pipelines
+
+For advanced use cases like text tokenization, feature normalization, or custom output formatting, you can define a custom pipeline:
+
+**1. Create a pipeline class:**
+
+```python
+# my_pipeline.py
+from shipml.pipeline import Pipeline
+import numpy as np
+
+class MyPipeline(Pipeline):
+    def __init__(self, model_path):
+        super().__init__(model_path)
+        # Initialize tokenizers, scalers, etc.
+
+    def preprocess(self, request_data):
+        """Transform API request -> model input"""
+        # Example: normalize features
+        features = np.array(request_data["features"])
+        return (features - self.mean) / self.std
+
+    def postprocess(self, model_output):
+        """Transform model output -> API response"""
+        # Example: add confidence scores
+        return {
+            "prediction": model_output["prediction"],
+            "confidence": model_output["probability"]
+        }
+```
+
+**2. Serve with your pipeline:**
+
+```bash
+shipml serve model.pkl --pipeline my_pipeline.MyPipeline
+```
+
+**Examples:**
+- `examples/pipelines/sentiment_pipeline.py` - HuggingFace text processing
+- `examples/pipelines/sklearn_normalization.py` - Feature normalization
+
 ---
 
 ## Hugging Face Models

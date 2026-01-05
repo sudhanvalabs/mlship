@@ -42,8 +42,14 @@ def cli(ctx, version):
 @click.option("--port", default=8000, type=int, help="Port to run server on (default: 8000)")
 @click.option("--host", default="127.0.0.1", type=str, help="Host to bind to (default: 127.0.0.1)")
 @click.option("--name", default=None, type=str, help="Model name for display")
+@click.option(
+    "--pipeline",
+    default=None,
+    type=str,
+    help="Custom pipeline class (e.g. pipeline.SentimentPipeline)",
+)
 @click.option("--reload", is_flag=True, help="Enable auto-reload on file changes (dev mode)")
-def serve(model_file: str, port: int, host: str, name: str, reload: bool):
+def serve(model_file: str, port: int, host: str, name: str, pipeline: str, reload: bool):
     """
     Start API server for your ML model.
 
@@ -97,8 +103,46 @@ def serve(model_file: str, port: int, host: str, name: str, reload: bool):
         click.echo(f"   Size:       {model_size:.2f} MB")
         click.echo()
 
-        # Step 4: Create FastAPI app
-        app = create_app(model, loader, model_name)
+        # Step 4: Load custom pipeline if provided
+        pipeline_instance = None
+        if pipeline:
+            click.echo("🔧 Loading custom pipeline...", nl=False)
+            try:
+                import importlib
+                import sys
+                from pathlib import Path as PathLib
+
+                # Add current directory to Python path so users can import local files
+                sys.path.insert(0, str(PathLib.cwd()))
+
+                # Parse module.ClassName format
+                if "." in pipeline:
+                    module_name, class_name = pipeline.rsplit(".", 1)
+                else:
+                    raise ValueError("Pipeline must be in format 'module.ClassName'")
+
+                # Import module and get class
+                module = importlib.import_module(module_name)
+                pipeline_class = getattr(module, class_name)
+
+                # Instantiate pipeline with model path
+                pipeline_instance = pipeline_class(
+                    str(model_path.parent if model_path.is_file() else model_path)
+                )
+
+                click.secho(" ✓ Success", fg="green")
+            except Exception as e:
+                click.secho(f" ✗ Failed", fg="red")
+                click.secho(f"   Error: {str(e)}", fg="red", err=True)
+                click.echo()
+                click.echo("Pipeline class should:")
+                click.echo("  1. Be in format 'module.ClassName'")
+                click.echo("  2. Inherit from shipml.pipeline.Pipeline")
+                click.echo("  3. Implement preprocess() and postprocess() methods")
+                raise click.Abort()
+
+        # Step 5: Create FastAPI app
+        app = create_app(model, loader, model_name, pipeline_instance)
 
         # Display server info
         click.secho("🎉 Server starting!", fg="green", bold=True)

@@ -11,7 +11,7 @@ from shipml.models import HealthResponse, InfoResponse
 from shipml.errors import ValidationError
 
 
-def create_app(model: Any, loader: ModelLoader, model_name: str) -> FastAPI:
+def create_app(model: Any, loader: ModelLoader, model_name: str, pipeline: Any = None) -> FastAPI:
     """
     Dynamically generate FastAPI app for the model.
 
@@ -19,6 +19,7 @@ def create_app(model: Any, loader: ModelLoader, model_name: str) -> FastAPI:
         model: Loaded model object
         loader: Model loader instance
         model_name: Display name for the model
+        pipeline: Optional custom pipeline for pre/post-processing
 
     Returns:
         FastAPI application
@@ -118,16 +119,39 @@ def create_app(model: Any, loader: ModelLoader, model_name: str) -> FastAPI:
         ```
         """
         try:
-            # Validate input
-            loader.validate_input(model, request.features)
+            if pipeline:
+                # Use custom pipeline
+                request_data = request.dict()
 
-            # Run prediction
-            result = loader.predict(model, request.features)
+                # Preprocess
+                processed_input = pipeline.preprocess(request_data)
 
-            # Add model name to response
-            result["model_name"] = model_name
+                # Run prediction (direct model call)
+                raw_output = (
+                    model(processed_input)
+                    if callable(model)
+                    else loader.predict(model, processed_input)
+                )
 
-            return result
+                # Postprocess
+                if isinstance(raw_output, dict) and "model_name" not in raw_output:
+                    # If postprocess returns dict without model_name, add it
+                    result = pipeline.postprocess(raw_output)
+                else:
+                    result = pipeline.postprocess(raw_output)
+
+                # Ensure model_name is in response
+                if isinstance(result, dict):
+                    result["model_name"] = model_name
+                    return result
+                else:
+                    return {"result": result, "model_name": model_name}
+            else:
+                # Default behavior - use loader
+                loader.validate_input(model, request.features)
+                result = loader.predict(model, request.features)
+                result["model_name"] = model_name
+                return result
 
         except ValidationError as e:
             # Return 400 for validation errors
