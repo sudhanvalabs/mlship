@@ -13,53 +13,42 @@ Test:
 """
 
 from shipml.pipeline import Pipeline
-import torch
 
 
 class SentimentPipeline(Pipeline):
     """Custom pipeline for sentiment analysis with HuggingFace models."""
 
-    def __init__(self, model_path):
-        """Initialize with tokenizer from model directory."""
-        super().__init__(model_path)
-
-        from transformers import AutoTokenizer
-
-        self.tokenizer = AutoTokenizer.from_pretrained(model_path)
-
     def preprocess(self, request_data):
         """
-        Convert text input to tokenized tensors.
+        Extract text from request.
+
+        HuggingFace pipelines handle tokenization internally, so just return raw text.
 
         Args:
             request_data: {"text": "This is great!"}
 
         Returns:
-            Tokenized tensors ready for model
+            Raw text string
         """
-        text = request_data.get("text", "")
-        return self.tokenizer(text, return_tensors="pt", padding=True, truncation=True)
+        return request_data.get("text", "")
 
     def postprocess(self, model_output):
         """
-        Convert model output to human-readable sentiment.
+        Convert pipeline output to custom format.
 
         Args:
-            model_output: Raw model output (logits)
+            model_output: Pipeline output like [{"label": "POSITIVE", "score": 0.999}]
 
         Returns:
-            {"sentiment": "POSITIVE", "confidence": 0.99}
+            {"sentiment": "POSITIVE", "confidence": 0.999}
         """
-        # Get probabilities from logits
-        logits = model_output.logits if hasattr(model_output, "logits") else model_output
-        probabilities = torch.softmax(logits, dim=-1)
+        # HuggingFace pipeline returns a list of predictions
+        if isinstance(model_output, list):
+            result = model_output[0]
+        else:
+            result = model_output
 
-        # Get prediction
-        predicted_class = torch.argmax(probabilities, dim=-1).item()
-        confidence = probabilities[0][predicted_class].item()
-
-        # Map to sentiment labels (for binary classification)
-        sentiments = {0: "NEGATIVE", 1: "POSITIVE"}
-        sentiment = sentiments.get(predicted_class, f"CLASS_{predicted_class}")
-
-        return {"sentiment": sentiment, "confidence": round(confidence, 4)}
+        return {
+            "sentiment": result["label"],
+            "confidence": round(result["score"], 4),
+        }
