@@ -507,6 +507,35 @@ shipml serve model.pkl --port 8001
 
 ---
 
+## Development
+
+### Running Tests
+
+```bash
+# Run all tests
+.venv/bin/python -m pytest
+
+# Run pipeline tests only
+.venv/bin/python -m pytest tests/test_pipelines.py -v
+
+# Run specific framework tests
+.venv/bin/python -m pytest tests/test_pipelines.py::TestSklearnPipeline -v
+.venv/bin/python -m pytest tests/test_pipelines.py::TestPyTorchPipeline -v
+.venv/bin/python -m pytest tests/test_pipelines.py::TestHuggingFacePipeline -v
+
+# Run single test
+.venv/bin/python -m pytest tests/test_pipelines.py::TestSklearnPipeline::test_sklearn_pipeline_preprocess -v
+```
+
+**Useful options:**
+- `-v` - Verbose output
+- `-s` - Show print statements
+- `-x` - Stop on first failure
+- `--no-cov` - Skip coverage report (faster)
+- `--lf` - Run only failed tests from last run
+
+---
+
 ## Contributing
 
 We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for:
