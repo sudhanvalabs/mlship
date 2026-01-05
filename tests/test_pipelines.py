@@ -295,7 +295,6 @@ class TensorFlowReshapePipeline(Pipeline):
 
     def postprocess(self, model_output):
         """Format TensorFlow output."""
-        import numpy as np
 
         # Extract prediction value
         if hasattr(model_output, "numpy"):

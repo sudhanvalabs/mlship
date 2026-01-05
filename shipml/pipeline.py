@@ -1,6 +1,6 @@
 """Base pipeline interface for custom preprocessing and postprocessing."""
 
-from typing import Any, Dict, Union, List
+from typing import Any, Dict
 from abc import ABC, abstractmethod
 
 

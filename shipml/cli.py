@@ -1,6 +1,5 @@
 """Command-line interface for ShipML."""
 
-import sys
 from pathlib import Path
 
 import click
@@ -132,7 +131,7 @@ def serve(model_file: str, port: int, host: str, name: str, pipeline: str, reloa
 
                 click.secho(" ✓ Success", fg="green")
             except Exception as e:
-                click.secho(f" ✗ Failed", fg="red")
+                click.secho(" ✗ Failed", fg="red")
                 click.secho(f"   Error: {str(e)}", fg="red", err=True)
                 click.echo()
                 click.echo("Pipeline class should:")

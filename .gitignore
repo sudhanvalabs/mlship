@@ -68,6 +68,7 @@ CLI_FIX.md
 
 # Downloaded HuggingFace models (too large for git)
 examples/sentiment-model/
+sentiment-model/
 
 # Benchmark artifacts
 test_*.pkl
