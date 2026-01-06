@@ -304,10 +304,7 @@ curl -X POST http://localhost:8000/predict \
 
 **Expected Response:**
 ```json
-{
-  "prediction": [0.234, -0.156],
-  "model_name": "pytorch_model"
-}
+{"prediction":1,"probability":0.9907106757164001,"model_name":"pytorch_model"}
 ```
 
 ---
