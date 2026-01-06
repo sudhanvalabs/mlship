@@ -512,25 +512,44 @@ See `PERFORMANCE.md` for current benchmarks.
 
 (For maintainers)
 
-1. **Update version** in `mlship/__init__.py`
-
-2. **Update CHANGELOG** (if exists)
-
-3. **Build package**
+1. **Update version** in `pyproject.toml`
    ```bash
+   # Change version line: version = "0.1.2"
+   git add pyproject.toml
+   git commit -m "chore: bump version to 0.1.2"
+   ```
+
+2. **Clean and build package**
+   ```bash
+   rm -rf dist/ build/ *.egg-info
    python -m build
    ```
 
-4. **Test installation**
+3. **Test installation locally**
    ```bash
-   uv pip install dist/mlship-0.2.0-py3-none-any.whl
+   uv pip install dist/mlship-0.1.2-py3-none-any.whl
    mlship --version
    ```
 
-5. **Publish to PyPI**
+4. **Test on TestPyPI first** ⚠️ **Important: Don't skip this!**
+   ```bash
+   twine upload --repository testpypi dist/*
+   # Test install from TestPyPI
+   pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple mlship
+   ```
+
+5. **Publish to PyPI** (only after TestPyPI works)
    ```bash
    twine upload dist/*
    ```
+
+6. **Create git tag and push**
+   ```bash
+   git tag v0.1.2
+   git push origin main --tags
+   ```
+
+For detailed publishing instructions, see [PUBLISHING.md](PUBLISHING.md).
 
 ---
 
