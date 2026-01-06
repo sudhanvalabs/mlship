@@ -11,7 +11,7 @@ Deploy your machine learning models locally in seconds—no Docker, no YAML, no 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
-> **Why mlship?** Read [WHY_MLSHIP.md](WHY_MLSHIP.md) to see how mlship compares to transformers-serve, vLLM, Ollama, and BentoML.
+> **Why mlship?** Read [WHY_MLSHIP.md](https://github.com/sudhanvalabs/mlship/blob/main/WHY_MLSHIP.md) to see how mlship compares to transformers-serve, vLLM, Ollama, and BentoML.
 
 ---
 
@@ -48,7 +48,7 @@ curl -X POST http://localhost:8000/predict \
   -d '{"features": "This product is amazing!"}'
 ```
 
-**📖 See [QUICKSTART.md](QUICKSTART.md)** for complete hands-on examples with:
+**📖 See [QUICKSTART.md](https://github.com/sudhanvalabs/mlship/blob/main/QUICKSTART.md)** for complete hands-on examples with:
 - HuggingFace models (sentiment, GPT-2, Q&A)
 - Local models (sklearn, PyTorch, TensorFlow)
 - Training code, curl commands, and expected responses
@@ -76,7 +76,7 @@ mlship serve gpt2 --source huggingface
 mlship serve distilbert-base-uncased-finetuned-sst-2-english --source huggingface
 ```
 
-Models are downloaded on first use and cached locally. See [QUICKSTART.md](QUICKSTART.md) for more examples.
+Models are downloaded on first use and cached locally. See [QUICKSTART.md](https://github.com/sudhanvalabs/mlship/blob/main/QUICKSTART.md) for more examples.
 
 ---
 
@@ -89,7 +89,7 @@ Every model automatically gets:
 - **GET `/info`** - Model metadata
 - **GET `/docs`** - Interactive Swagger UI documentation
 
-Examples in [QUICKSTART.md](QUICKSTART.md).
+Examples in [QUICKSTART.md](https://github.com/sudhanvalabs/mlship/blob/main/QUICKSTART.md).
 
 ---
 
@@ -109,7 +109,7 @@ mlship serve model.pkl --name "fraud-detector"
 mlship serve model.pkl --pipeline my_module.MyPipeline
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for custom pipeline documentation.
+See [CONTRIBUTING.md](https://github.com/sudhanvalabs/mlship/blob/main/CONTRIBUTING.md) for custom pipeline documentation.
 
 ---
 
@@ -128,31 +128,31 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for custom pipeline documentation.
 - Teach framework-agnostic model serving concepts
 - Create reproducible examples that work across frameworks
 
-Read [WHY_MLSHIP.md](WHY_MLSHIP.md) for detailed positioning.
+Read [WHY_MLSHIP.md](https://github.com/sudhanvalabs/mlship/blob/main/WHY_MLSHIP.md) for detailed positioning.
 
 ---
 
 ## Documentation
 
-- **[QUICKSTART.md](QUICKSTART.md)** - 🚀 **Start here!** Complete hands-on guide with:
+- **[QUICKSTART.md](https://github.com/sudhanvalabs/mlship/blob/main/QUICKSTART.md)** - 🚀 **Start here!** Complete hands-on guide with:
   - HuggingFace Hub examples (sentiment analysis, GPT-2, Q&A)
   - Local model examples (sklearn, PyTorch, TensorFlow)
   - Training code, curl commands, and expected responses
   - Perfect for first-time users and students
 
-- **[WHY_MLSHIP.md](WHY_MLSHIP.md)** - 🎯 **Understanding mlship's unique value**
+- **[WHY_MLSHIP.md](https://github.com/sudhanvalabs/mlship/blob/main/WHY_MLSHIP.md)** - 🎯 **Understanding mlship's unique value**
   - Comparison with transformers-serve, vLLM, Ollama, BentoML
   - Multi-framework advantage explained
   - Target audience and use cases
   - When to use mlship vs alternatives
 
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** - 🛠️ **For contributors**
+- **[CONTRIBUTING.md](https://github.com/sudhanvalabs/mlship/blob/main/CONTRIBUTING.md)** - 🛠️ **For contributors**
   - Development setup and workflow
   - Running tests and code style
   - Custom pipeline development
   - How to submit pull requests
 
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** - 🏗️ **Technical deep dive**
+- **[ARCHITECTURE.md](https://github.com/sudhanvalabs/mlship/blob/main/ARCHITECTURE.md)** - 🏗️ **Technical deep dive**
   - Design decisions and philosophy
   - Performance optimizations
   - Framework detection system
@@ -179,7 +179,7 @@ pip install mlship[all]           # All frameworks
 
 ## Contributing
 
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for:
+We welcome contributions! See [CONTRIBUTING.md](https://github.com/sudhanvalabs/mlship/blob/main/CONTRIBUTING.md) for:
 - Development setup
 - Running tests
 - Code style guidelines
@@ -197,13 +197,13 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](https://github.com/sudhanvalabs/mlship/blob/main/LICENSE) file for details.
 
 ---
 
 ## What Makes mlship Different?
 
-mlship is the **only zero-code tool** that supports sklearn, PyTorch, TensorFlow, AND HuggingFace models with a single command. Read [WHY_MLSHIP.md](WHY_MLSHIP.md) for detailed comparison with transformers-serve, vLLM, Ollama, and BentoML.
+mlship is the **only zero-code tool** that supports sklearn, PyTorch, TensorFlow, AND HuggingFace models with a single command. Read [WHY_MLSHIP.md](https://github.com/sudhanvalabs/mlship/blob/main/WHY_MLSHIP.md) for detailed comparison with transformers-serve, vLLM, Ollama, and BentoML.
 
 **Quick comparison:**
 - ✅ Multi-framework (not just one)
@@ -235,7 +235,7 @@ mlship is the **only zero-code tool** that supports sklearn, PyTorch, TensorFlow
 - 🔄 **Batch inference** - Efficient batch prediction endpoints
 - 🔄 **Authentication** - Optional API key authentication for deployments
 
-Want to contribute? See [CONTRIBUTING.md](CONTRIBUTING.md) or [open an issue](https://github.com/sudhanvalabs/mlship/issues) with your ideas!
+Want to contribute? See [CONTRIBUTING.md](https://github.com/sudhanvalabs/mlship/blob/main/CONTRIBUTING.md) or [open an issue](https://github.com/sudhanvalabs/mlship/issues) with your ideas!
 
 ---
 
