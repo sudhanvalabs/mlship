@@ -102,50 +102,9 @@ mlship --version
 mlship --help
 ```
 
-**Test with a simple model:**
+**That's it!** mlship is now installed and ready to use.
 
-```bash
-# Install scikit-learn
-pip install scikit-learn
-
-# Create a test model
-python -c "
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.datasets import make_classification
-import joblib
-
-X, y = make_classification(n_samples=100, n_features=4, random_state=42)
-model = RandomForestClassifier(random_state=42)
-model.fit(X, y)
-joblib.dump(model, 'test_model.pkl')
-print('✅ Test model created: test_model.pkl')
-"
-
-# Serve the model
-mlship serve test_model.pkl
-```
-
-The server will start on http://localhost:8000. In a new terminal, test it:
-
-```bash
-# Test prediction
-curl -X POST http://localhost:8000/predict \
-  -H "Content-Type: application/json" \
-  -d '{"features": [1.0, 2.0, 3.0, 4.0]}'
-```
-
-**Expected response:**
-```json
-{
-  "prediction": 1,
-  "probability": 0.85,
-  "model_name": "test_model"
-}
-```
-
-Visit http://localhost:8000/docs to see the interactive API documentation.
-
-**If everything works, you're ready to go!** 🎉
+For complete examples with HuggingFace Hub models and local models (sklearn, PyTorch, TensorFlow), see the sections below.
 
 ---
 
