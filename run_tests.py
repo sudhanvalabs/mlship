@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Cross-platform test runner for ShipML.
+"""Cross-platform test runner for mlship.
 
 Works on Windows, macOS, and Linux.
 """
@@ -19,7 +19,7 @@ def check_package(package_name):
 
 
 def main():
-    print("🧪 Running ShipML Integration Tests")
+    print("🧪 Running mlship Integration Tests")
     print("=" * 40)
     print()
 
@@ -88,7 +88,7 @@ def main():
             "pytest",
             "tests/",
             "-v",
-            "--cov=shipml",
+            "--cov=mlship",
             "--cov-report=term-missing",
         ]
     )

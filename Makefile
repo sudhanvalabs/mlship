@@ -1,9 +1,9 @@
-# Makefile for ShipML development
+# Makefile for mlship development
 
 .PHONY: help install test lint format clean build publish
 
 help:
-	@echo "ShipML Development Commands"
+	@echo "mlship Development Commands"
 	@echo ""
 	@echo "  make install    Install package in development mode"
 	@echo "  make test       Run tests"
@@ -17,19 +17,19 @@ install:
 	uv pip install -e ".[dev,all]"
 
 test:
-	pytest -v --cov=shipml --cov-report=term-missing
+	pytest -v --cov=mlship --cov-report=term-missing
 
 test-fast:
 	pytest -v
 
 lint:
-	black --check shipml/ tests/
-	ruff check shipml/ tests/
-	mypy shipml/
+	black --check mlship/ tests/
+	ruff check mlship/ tests/
+	mypy mlship/
 
 format:
-	black shipml/ tests/
-	ruff check --fix shipml/ tests/
+	black mlship/ tests/
+	ruff check --fix mlship/ tests/
 
 clean:
 	rm -rf build/

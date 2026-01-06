@@ -40,7 +40,7 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest tests/ -v --cov=shipml --cov-report=xml --cov-report=term
+        pytest tests/ -v --cov=mlship --cov-report=xml --cov-report=term
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
@@ -81,7 +81,7 @@ jobs:
       shell: powershell
       if: runner.os == 'Windows'
 
-    - name: Install ShipML with ${{ matrix.framework.name }}
+    - name: Install mlship with ${{ matrix.framework.name }}
       run: |
         uv pip install --system -e ".[${{ matrix.framework.name }},dev]"
 
@@ -105,11 +105,11 @@ jobs:
         pip install ruff black mypy
 
     - name: Check formatting with black
-      run: black --check shipml/ tests/
+      run: black --check mlship/ tests/
 
     - name: Lint with ruff
-      run: ruff check shipml/ tests/
+      run: ruff check mlship/ tests/
 
     - name: Type check with mypy
-      run: mypy shipml/
+      run: mypy mlship/
       continue-on-error: true

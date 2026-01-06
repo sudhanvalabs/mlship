@@ -1,9 +1,9 @@
 #!/bin/bash
-# Run all tests for ShipML
+# Run all tests for mlship
 
 set -e
 
-echo "🧪 Running ShipML Integration Tests"
+echo "🧪 Running mlship Integration Tests"
 echo "===================================="
 echo ""
 
@@ -98,7 +98,7 @@ echo "🔬 Running tests..."
 echo ""
 
 # Run all tests with coverage
-pytest tests/ -v --cov=shipml --cov-report=term-missing
+pytest tests/ -v --cov=mlship --cov-report=term-missing
 
 echo ""
 echo "✅ All tests completed!"

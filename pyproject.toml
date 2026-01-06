@@ -64,10 +64,10 @@ dev = [
 mlship = "mlship.cli:cli"
 
 [project.urls]
-Homepage = "https://github.com/prabhueshwarla/shipml"
-Documentation = "https://github.com/prabhueshwarla/shipml#readme"
-Repository = "https://github.com/prabhueshwarla/shipml"
-Issues = "https://github.com/prabhueshwarla/shipml/issues"
+Homepage = "https://github.com/prabhueshwarla/mlship"
+Documentation = "https://github.com/prabhueshwarla/mlship#readme"
+Repository = "https://github.com/prabhueshwarla/mlship"
+Issues = "https://github.com/prabhueshwarla/mlship/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]

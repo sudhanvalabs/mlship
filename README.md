@@ -625,9 +625,9 @@ mlship includes focused documentation for different audiences:
 
 ## Support
 
-- 📖 [Documentation](https://github.com/prabhueshwarla/shipml#readme)
-- 🐛 [Report Issues](https://github.com/prabhueshwarla/shipml/issues)
-- 💬 [Discussions](https://github.com/prabhueshwarla/shipml/discussions)
+- 📖 [Documentation](https://github.com/prabhueshwarla/mlship#readme)
+- 🐛 [Report Issues](https://github.com/prabhueshwarla/mlship/issues)
+- 💬 [Discussions](https://github.com/prabhueshwarla/mlship/discussions)
 
 ---
 

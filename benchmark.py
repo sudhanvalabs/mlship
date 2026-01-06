@@ -1,5 +1,5 @@
 """
-Benchmark ShipML serve operation to identify bottlenecks.
+Benchmark mlship serve operation to identify bottlenecks.
 """
 
 import time
@@ -195,7 +195,7 @@ def benchmark_cli_overhead():
     # Time CLI help (no model loading)
     start = time.time()
     result = subprocess.run(
-        ["shipml", "--help"],
+        ["mlship", "--help"],
         capture_output=True,
         text=True
     )
@@ -205,7 +205,7 @@ def benchmark_cli_overhead():
     # Time CLI version
     start = time.time()
     result = subprocess.run(
-        ["shipml", "--version"],
+        ["mlship", "--version"],
         capture_output=True,
         text=True
     )
@@ -223,7 +223,7 @@ def benchmark_cli_overhead():
 
 
 def main():
-    print("\n🔬 ShipML Performance Benchmark")
+    print("\n🔬 mlship Performance Benchmark")
     print("=" * 60)
 
     results = {}

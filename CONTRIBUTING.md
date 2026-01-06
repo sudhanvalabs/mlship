@@ -1,6 +1,6 @@
-# Contributing to ShipML
+# Contributing to mlship
 
-Thank you for your interest in contributing to ShipML! This guide will help you get started.
+Thank you for your interest in contributing to mlship! This guide will help you get started.
 
 ---
 
@@ -9,8 +9,8 @@ Thank you for your interest in contributing to ShipML! This guide will help you 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/prabhueshwarla/shipml
-cd shipml
+git clone https://github.com/prabhueshwarla/mlship
+cd mlship
 ```
 
 ### 2. Install uv (Recommended)
@@ -40,7 +40,7 @@ uv pip install -e ".[dev,all]"
 ```
 
 This installs:
-- ShipML in editable mode (`-e`)
+- mlship in editable mode (`-e`)
 - All framework support (sklearn, pytorch, tensorflow, huggingface)
 - Development tools (pytest, black, ruff, mypy)
 
@@ -49,8 +49,8 @@ This installs:
 ## Project Structure
 
 ```
-shipml/
-├── shipml/              # Source code
+mlship/
+├── mlship/              # Source code
 │   ├── __init__.py
 │   ├── cli.py          # CLI commands (Click)
 │   ├── server.py       # FastAPI app generator
@@ -77,7 +77,7 @@ shipml/
 
 ## Running Tests
 
-ShipML has comprehensive integration tests that verify all model frameworks work correctly.
+mlship has comprehensive integration tests that verify all model frameworks work correctly.
 
 ### Quick Test Run
 
@@ -123,7 +123,7 @@ This tests:
 
 Each test:
 1. Downloads/creates the model
-2. Loads it with ShipML
+2. Loads it with mlship
 3. Tests all endpoints: `/health`, `/info`, `/predict`, `/docs`
 4. Tests error handling
 5. Cleans up (deletes downloaded models)
@@ -131,7 +131,7 @@ Each test:
 ### Run with Coverage
 
 ```bash
-pytest --cov=shipml --cov-report=html
+pytest --cov=mlship --cov-report=html
 ```
 
 View coverage report:
@@ -176,18 +176,18 @@ This runs:
 pytest tests/test_integration.py --tb=short
 
 # Full check with coverage
-pytest --cov=shipml --cov-report=term-missing
+pytest --cov=mlship --cov-report=term-missing
 
 # Format check only
-black --check shipml/ tests/
+black --check mlship/ tests/
 
 # Lint check only
-ruff check shipml/ tests/
+ruff check mlship/ tests/
 ```
 
 ### GitHub Actions (Automated Testing)
 
-ShipML uses GitHub Actions to automatically test on **every push** across:
+mlship uses GitHub Actions to automatically test on **every push** across:
 
 **Platforms:**
 - ✅ Ubuntu (Linux)
@@ -215,38 +215,38 @@ The CI workflow is defined in `.github/workflows/test.yml` and runs automaticall
 ### Format Code
 
 ```bash
-black shipml/ tests/
+black mlship/ tests/
 ```
 
 ### Lint Code
 
 ```bash
-ruff check shipml/ tests/
+ruff check mlship/ tests/
 ```
 
 ### Auto-fix Linting Issues
 
 ```bash
-ruff check --fix shipml/ tests/
+ruff check --fix mlship/ tests/
 ```
 
 ### Type Check
 
 ```bash
-mypy shipml/
+mypy mlship/
 ```
 
 ### Run All Checks
 
 ```bash
 # Format
-black shipml/ tests/
+black mlship/ tests/
 
 # Lint
-ruff check --fix shipml/ tests/
+ruff check --fix mlship/ tests/
 
 # Type check
-mypy shipml/
+mypy mlship/
 
 # Test
 pytest
@@ -260,13 +260,13 @@ Want to add support for a new ML framework? Here's how:
 
 ### 1. Create Loader Class
 
-Create `shipml/loaders/newframework.py`:
+Create `mlship/loaders/newframework.py`:
 
 ```python
 from pathlib import Path
 from typing import Any, Dict, List, Union
-from shipml.errors import ModelLoadError, ValidationError
-from shipml.loaders.base import ModelLoader
+from mlship.errors import ModelLoadError, ValidationError
+from mlship.loaders.base import ModelLoader
 
 class NewFrameworkLoader(ModelLoader):
     """Loader for NewFramework models."""
@@ -311,7 +311,7 @@ class NewFrameworkLoader(ModelLoader):
 
 ### 2. Update Detector
 
-Edit `shipml/loaders/detector.py`:
+Edit `mlship/loaders/detector.py`:
 
 ```python
 def detect_framework(model_path: Path) -> str:
@@ -322,7 +322,7 @@ def detect_framework(model_path: Path) -> str:
 def get_loader(framework: str) -> ModelLoader:
     # ... existing code ...
     elif framework == "newframework":
-        from shipml.loaders.newframework import NewFrameworkLoader
+        from mlship.loaders.newframework import NewFrameworkLoader
         return NewFrameworkLoader()
 ```
 
@@ -346,7 +346,7 @@ Create `tests/test_newframework.py`:
 ```python
 import pytest
 from pathlib import Path
-from shipml.loaders.newframework import NewFrameworkLoader
+from mlship.loaders.newframework import NewFrameworkLoader
 
 def test_load():
     """Test loading model."""
@@ -373,7 +373,7 @@ Add to `README.md` supported frameworks table.
 python examples/sklearn_example.py
 
 # 2. Serve it
-shipml serve fraud_detector.pkl
+mlship serve fraud_detector.pkl
 
 # 3. Test prediction
 curl -X POST http://localhost:8000/predict \
@@ -388,7 +388,7 @@ curl -X POST http://localhost:8000/predict \
 pytest
 
 # Check coverage
-pytest --cov=shipml --cov-report=term-missing
+pytest --cov=mlship --cov-report=term-missing
 ```
 
 ---
@@ -409,8 +409,8 @@ pytest --cov=shipml --cov-report=term-missing
 
 4. **Run quality checks**
    ```bash
-   black shipml/ tests/
-   ruff check --fix shipml/ tests/
+   black mlship/ tests/
+   ruff check --fix mlship/ tests/
    pytest
    ```
 
@@ -512,7 +512,7 @@ See `PERFORMANCE.md` for current benchmarks.
 
 (For maintainers)
 
-1. **Update version** in `shipml/__init__.py`
+1. **Update version** in `mlship/__init__.py`
 
 2. **Update CHANGELOG** (if exists)
 
@@ -523,8 +523,8 @@ See `PERFORMANCE.md` for current benchmarks.
 
 4. **Test installation**
    ```bash
-   uv pip install dist/shipml-0.2.0-py3-none-any.whl
-   shipml --version
+   uv pip install dist/mlship-0.2.0-py3-none-any.whl
+   mlship --version
    ```
 
 5. **Publish to PyPI**
@@ -538,8 +538,8 @@ See `PERFORMANCE.md` for current benchmarks.
 
 - Read existing code - it's well-documented
 - Check tests for usage examples
-- Open a [Discussion](https://github.com/prabhueshwarla/shipml/discussions) for questions
-- Open an [Issue](https://github.com/prabhueshwarla/shipml/issues) for bugs
+- Open a [Discussion](https://github.com/prabhueshwarla/mlship/discussions) for questions
+- Open an [Issue](https://github.com/prabhueshwarla/mlship/issues) for bugs
 
 ---
 
@@ -549,4 +549,4 @@ Be respectful and constructive. We're all here to build something useful togethe
 
 ---
 
-**Thank you for contributing to ShipML!** 🚀
+**Thank you for contributing to mlship!** 🚀
