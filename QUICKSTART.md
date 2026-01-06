@@ -498,6 +498,36 @@ mlship serve model.pkl --port 5000  # Try different port
 - For HuggingFace: Use `--source huggingface` flag for Hub models
 - Check file exists: `ls -lh model.pkl`
 
+**Getting old version after update?**
+
+First, check if your installed version matches the latest on PyPI:
+
+```bash
+# Check your installed version
+pip show mlship | grep Version
+
+# Compare with latest on PyPI
+# Visit: https://pypi.org/project/mlship/
+```
+
+If the versions don't match, clear pip's cache:
+
+```bash
+# Clear pip cache
+pip cache purge
+
+# Install without cache
+pip install --no-cache-dir mlship
+
+# Or explicitly install latest version
+pip install --upgrade --no-cache-dir mlship
+
+# Verify version
+pip show mlship
+```
+
+This happens when PyPI releases a new version but pip uses cached data. The `--no-cache-dir` flag forces pip to check PyPI directly.
+
 ---
 
 **Happy serving!** 🚀
