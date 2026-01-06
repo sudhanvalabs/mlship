@@ -512,10 +512,10 @@ See `PERFORMANCE.md` for current benchmarks.
 
 (For maintainers)
 
-1. **Update version** in `pyproject.toml`
+1. **Update version** in `pyproject.toml` and `mlship/__init__.py`
    ```bash
    # Change version line: version = "0.1.2"
-   git add pyproject.toml
+   git add pyproject.toml mlship/__init__.py
    git commit -m "chore: bump version to 0.1.2"
    ```
 
@@ -530,7 +530,7 @@ See `PERFORMANCE.md` for current benchmarks.
    uv pip install dist/mlship-0.1.2-py3-none-any.whl
    mlship --version
    ```
-
+Note: change the version number accordingly.
 4. **Test on TestPyPI first** ⚠️ **Important: Don't skip this!**
    ```bash
    twine upload --repository testpypi dist/*
@@ -543,11 +543,23 @@ See `PERFORMANCE.md` for current benchmarks.
    twine upload dist/*
    ```
 
-6. **Create git tag and push**
+6. **Run post-release smoke test** ⚠️ **Critical: Validates the PyPI package**
+   ```bash
+   # Test the latest published version
+   ./scripts/post_release_smoke_test.sh
+
+   # Or test a specific version
+   ./scripts/post_release_smoke_test.sh 0.1.5
+   ```
+
+   This creates a fresh environment, installs from PyPI, and validates all QUICKSTART examples work correctly.
+
+7. **Create git tag and push**
    ```bash
    git tag v0.1.2
    git push origin main --tags
    ```
+   Note: change tag versions accordingly
 
 For detailed publishing instructions, see [PUBLISHING.md](PUBLISHING.md).
 
