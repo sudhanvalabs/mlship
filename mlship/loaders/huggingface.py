@@ -93,11 +93,13 @@ class HuggingFaceLoader(ModelLoader):
 
         except ImportError:
             raise ModelLoadError(
-                "Hugging Face Transformers is not installed.\n\n"
-                "Install with:\n"
-                "  uv pip install transformers\n"
-                "Or:\n"
-                "  uv pip install mlship[huggingface]"
+                "HuggingFace models require transformers and PyTorch.\n\n"
+                "If you installed mlship with:\n"
+                "  pip install mlship\n\n"
+                "You need to reinstall with HuggingFace support:\n"
+                "  pip install 'mlship[huggingface]'\n\n"
+                "This will install transformers and PyTorch automatically.\n\n"
+                "Note: On zsh (macOS), quotes are required: 'mlship[huggingface]'"
             )
         except Exception as e:
             raise ModelLoadError(f"Failed to load Hugging Face model: {e}")

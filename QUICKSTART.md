@@ -133,7 +133,13 @@ Visit http://localhost:8000/docs to see the interactive API documentation.
 
 The fastest way to try mlship is with HuggingFace Hub models (no model files needed).
 
-**Note:** Make sure you installed with `pip install 'mlship[huggingface]'` to get PyTorch support.
+⚠️ **IMPORTANT**: HuggingFace models require PyTorch. If you only installed `pip install mlship`, you'll get an error. Install the huggingface extras:
+
+```bash
+pip install 'mlship[huggingface]'
+```
+
+This installs transformers + PyTorch which are required for HuggingFace models.
 
 ### Example 1: Sentiment Analysis
 
