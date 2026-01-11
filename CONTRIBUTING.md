@@ -109,7 +109,7 @@ pytest
 
 ### Run Integration Tests Only
 
-These tests download models, test all API endpoints, and cleanup automatically:
+**API Integration Tests** - Test FastAPI endpoints directly:
 
 ```bash
 pytest tests/test_integration.py -v
@@ -127,6 +127,48 @@ Each test:
 3. Tests all endpoints: `/health`, `/info`, `/predict`, `/docs`
 4. Tests error handling
 5. Cleans up (deletes downloaded models)
+
+**CLI Integration Tests** - Test actual CLI commands (serve, benchmark):
+
+```bash
+pytest tests/test_cli_integration.py -v
+```
+
+This tests:
+- ✅ `mlship serve` command with sklearn, PyTorch, TensorFlow, HuggingFace models
+- ✅ `mlship benchmark` command with all model types
+- ✅ Custom payloads and output formats
+- ✅ End-to-end CLI workflow
+
+### Run Framework-Specific Tests
+
+Test only specific frameworks (if you don't have all dependencies installed):
+
+```bash
+# Test only sklearn
+pytest tests/test_cli_integration.py::TestServeCommandCLI::test_serve_sklearn_cli -v
+
+# Test only PyTorch
+pytest tests/test_cli_integration.py::TestServeCommandCLI::test_serve_pytorch_cli -v
+
+# Test only TensorFlow
+pytest tests/test_cli_integration.py::TestServeCommandCLI::test_serve_tensorflow_cli -v
+
+# Test benchmarking
+pytest tests/test_cli_integration.py::TestBenchmarkCommandCLI -v
+```
+
+### Skip Slow Tests
+
+HuggingFace Hub tests download models (~268MB) and are marked as slow:
+
+```bash
+# Skip slow tests
+pytest -m "not slow"
+
+# Run only slow tests
+pytest -m "slow"
+```
 
 ### Run with Coverage
 
@@ -204,25 +246,44 @@ pytest tests/ -v
 # Test core loaders (sklearn, PyTorch, TensorFlow, HuggingFace)
 pytest tests/test_loaders.py -v
 
-# Test CLI commands
+# Test CLI commands (unit tests)
 pytest tests/test_cli.py -v
 
-# Test end-to-end integration
+# Test API endpoints (FastAPI integration)
 pytest tests/test_integration.py -v
+
+# Test CLI commands with real models (end-to-end)
+pytest tests/test_cli_integration.py -v
 
 # Test benchmark functionality
 pytest tests/test_benchmark.py -v
 ```
 
+**Comprehensive framework coverage testing:**
+```bash
+# Test all frameworks with actual CLI commands
+pytest tests/test_cli_integration.py -v
+
+# This tests:
+# - mlship serve with sklearn, PyTorch, TensorFlow, HuggingFace models
+# - mlship benchmark with all model types
+# - Custom payloads and output formats
+# - Full end-to-end workflows
+```
+
 **With coverage report:**
 ```bash
 pytest tests/ -v --cov=mlship --cov-report=term-missing
+
+# Or for HTML report
+pytest tests/ --cov=mlship --cov-report=html
 ```
 
 This ensures:
 - ✅ All model loaders still work (sklearn, PyTorch, TensorFlow, HuggingFace)
-- ✅ CLI commands work correctly
+- ✅ CLI commands work correctly (both unit and integration tests)
 - ✅ Server endpoints function properly
+- ✅ Benchmark command works with all model types
 - ✅ Error handling is intact
 - ✅ No breaking changes introduced
 
