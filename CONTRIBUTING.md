@@ -185,6 +185,56 @@ black --check mlship/ tests/
 ruff check mlship/ tests/
 ```
 
+### Regression Testing
+
+When adding new features or making changes, run regression tests to ensure existing functionality still works:
+
+**Full regression test suite:**
+```bash
+# Activate virtual environment first
+source .venv/bin/activate  # macOS/Linux
+.venv\Scripts\activate     # Windows
+
+# Run all tests
+pytest tests/ -v
+```
+
+**Test specific areas:**
+```bash
+# Test core loaders (sklearn, PyTorch, TensorFlow, HuggingFace)
+pytest tests/test_loaders.py -v
+
+# Test CLI commands
+pytest tests/test_cli.py -v
+
+# Test end-to-end integration
+pytest tests/test_integration.py -v
+
+# Test benchmark functionality
+pytest tests/test_benchmark.py -v
+```
+
+**With coverage report:**
+```bash
+pytest tests/ -v --cov=mlship --cov-report=term-missing
+```
+
+This ensures:
+- ✅ All model loaders still work (sklearn, PyTorch, TensorFlow, HuggingFace)
+- ✅ CLI commands work correctly
+- ✅ Server endpoints function properly
+- ✅ Error handling is intact
+- ✅ No breaking changes introduced
+
+**Example workflow when adding a feature:**
+1. Create feature branch
+2. Implement feature
+3. Write tests for new feature
+4. Run regression tests: `pytest tests/ -v`
+5. Fix any broken tests
+6. Run pre-push checks: `./pre_push.sh`
+7. Commit and push
+
 ### GitHub Actions (Automated Testing)
 
 mlship uses GitHub Actions to automatically test on **every push** across:

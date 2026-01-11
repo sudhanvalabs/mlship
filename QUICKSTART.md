@@ -488,20 +488,50 @@ mlship benchmark model.pkl --payload '{"features": [1.0, 2.0, 3.0, 4.0]}'
 
 **Benchmark HuggingFace Hub model:**
 ```bash
-mlship benchmark distilbert-base-uncased-finetuned-sst-2-english --source huggingface --requests 50
+mlship benchmark distilbert-base-uncased-finetuned-sst-2-english --source huggingface --requests 20 --warmup 3
 ```
+
+The benchmark command handles everything automatically:
+- ✅ Detects HuggingFace model and downloads it (first time only, then cached)
+- ✅ Starts mlship server in background
+- ✅ Runs warmup requests to stabilize performance
+- ✅ Measures cold start latency (first prediction)
+- ✅ Runs benchmark requests and collects metrics
+- ✅ Shows detailed performance results
+- ✅ Stops server and cleans up
 
 **Custom port:**
 ```bash
 mlship benchmark model.pkl --port 5000
 ```
 
+### Understanding Benchmark Results
+
+**Cold Start Time:**
+- First run: ~300-400ms (model loads from disk)
+- Subsequent runs: ~30-50ms (model cached)
+- This is normal - production keeps models in memory
+
+**Latency Variance:**
+- 15-30% variance between runs is normal
+- Caused by: CPU throttling, background processes, OS scheduler
+- Run with `--requests 1000` for more stable averages
+- **P95/P99 matter** - these show worst-case latency
+
+**Example comparison:**
+```bash
+# Compare sklearn vs HuggingFace performance
+mlship benchmark sklearn_model.pkl --requests 100
+mlship benchmark distilbert-base-uncased-finetuned-sst-2-english --source huggingface --requests 100
+```
+
 ### When to Benchmark
 
 - Before deploying to production
 - After model changes
-- To compare different model formats
-- To validate performance requirements
+- To compare different model formats (sklearn vs PyTorch vs TensorFlow)
+- To validate performance requirements (e.g., "P95 must be < 50ms")
+- To detect performance regressions
 
 ---
 
