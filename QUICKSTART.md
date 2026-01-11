@@ -416,6 +416,95 @@ mlship serve model.pkl --name "fraud-detector"
 
 ---
 
+## Benchmarking Your Model
+
+mlship includes a built-in benchmark command to measure model serving performance.
+
+### Basic Benchmarking
+
+```bash
+mlship benchmark model.pkl
+```
+
+This runs 100 requests and shows:
+- Cold start latency
+- Average latency
+- Percentiles (P50, P95, P99)
+- Throughput (requests/sec)
+
+### Example Output
+
+```
+==================================================
+Model: sklearn_model.pkl
+Framework: sklearn
+Warmup requests: 5
+Benchmark requests: 100
+==================================================
+
+Measuring cold start latency...
+Cold start: 0.234s
+
+Warming up...
+Warmup: 5/5
+
+Running 100 requests...
+Progress: 100/100
+
+==================================================
+BENCHMARK RESULTS
+==================================================
+
+Cold Start:     234.00ms
+
+Performance Metrics:
+  Average:       45.23ms
+  Min:           32.10ms
+  P50 (Median):  44.50ms
+  P95:           67.80ms
+  P99:           89.20ms
+  Max:           102.30ms
+
+Throughput:     ~22.1 requests/sec
+==================================================
+```
+
+### Advanced Options
+
+**More requests:**
+```bash
+mlship benchmark model.pkl --requests 1000
+```
+
+**JSON output (for automation):**
+```bash
+mlship benchmark model.pkl --output json > results.json
+```
+
+**Custom payload:**
+```bash
+mlship benchmark model.pkl --payload '{"features": [1.0, 2.0, 3.0, 4.0]}'
+```
+
+**Benchmark HuggingFace Hub model:**
+```bash
+mlship benchmark distilbert-base-uncased-finetuned-sst-2-english --source huggingface --requests 50
+```
+
+**Custom port:**
+```bash
+mlship benchmark model.pkl --port 5000
+```
+
+### When to Benchmark
+
+- Before deploying to production
+- After model changes
+- To compare different model formats
+- To validate performance requirements
+
+---
+
 ## Framework Support
 
 | Framework | Install | Serve Command |

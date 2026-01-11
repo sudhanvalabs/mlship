@@ -20,6 +20,7 @@ Deploy your machine learning models locally in seconds - no Docker, no YAML, no 
 - ✅ **One-command deployment** - No configuration needed
 - ✅ **Multi-framework** - sklearn, PyTorch, TensorFlow, HuggingFace (local + Hub)
 - ✅ **HuggingFace Hub** - Serve models directly from Hub without downloading
+- ✅ **Built-in benchmarking** - Measure latency and throughput with `mlship benchmark`
 - ✅ **Auto-generated API** - REST API with interactive docs
 - ✅ **Works offline** - Zero internet dependency after installation
 - ✅ **Fast** - Deploy in seconds, predictions in milliseconds
@@ -109,9 +110,17 @@ mlship serve model.pkl --name "fraud-detector"
 
 # Custom preprocessing/postprocessing
 mlship serve model.pkl --pipeline my_module.MyPipeline
+
+# Benchmark performance
+mlship benchmark model.pkl --requests 1000
+
+# Benchmark with JSON output
+mlship benchmark model.pkl --output json > results.json
 ```
 
 See [CONTRIBUTING.md](https://github.com/sudhanvalabs/mlship/blob/main/CONTRIBUTING.md) for custom pipeline documentation.
+
+See [QUICKSTART.md](https://github.com/sudhanvalabs/mlship/blob/main/QUICKSTART.md#benchmarking-your-model) for detailed benchmarking guide.
 
 ---
 
@@ -223,6 +232,7 @@ mlship is the **only zero-code tool** that supports sklearn, PyTorch, TensorFlow
 - ✅ **Multi-framework support** - sklearn, PyTorch, TensorFlow, HuggingFace
 - ✅ **HuggingFace Hub integration** - Serve models directly from Hub with `--source huggingface`
 - ✅ **PyTorch TorchScript support** - Full support for custom PyTorch models via TorchScript
+- ✅ **Built-in benchmarking** - Measure latency (p50/p95/p99) and throughput with `mlship benchmark`
 - ✅ **Zero-code deployment** - One command to serve any model
 - ✅ **Auto-generated REST API** - With interactive Swagger docs
 - ✅ **Custom pipelines** - Preprocessing/postprocessing support

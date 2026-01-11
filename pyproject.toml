@@ -30,6 +30,7 @@ dependencies = [
     "uvicorn[standard]>=0.24",
     "pydantic>=2.0",
     "python-multipart>=0.0.6",
+    "requests>=2.31",
 ]
 
 [project.optional-dependencies]
