@@ -114,9 +114,29 @@ mlship serve model.pkl --pipeline my_module.MyPipeline
 # Benchmark performance
 mlship benchmark model.pkl --requests 1000
 
-# Benchmark with JSON output
+# Benchmark with custom warmup and port
+mlship benchmark model.pkl --requests 500 --warmup 10 --port 9000
+
+# Benchmark with custom payload
+mlship benchmark model.pkl --payload '{"features": [5.1, 3.5, 1.4, 0.2]}'
+
+# Benchmark HuggingFace model
+mlship benchmark distilbert-base-uncased-finetuned-sst-2-english --source huggingface --requests 50
+
+# Benchmark with JSON output (for CI/CD)
 mlship benchmark model.pkl --output json > results.json
 ```
+
+**Benchmark options:**
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `--requests N` | 100 | Number of benchmark requests |
+| `--warmup N` | 5 | Number of warmup requests |
+| `--port PORT` | 8000 | Server port |
+| `--payload JSON` | auto | Custom test payload as JSON string |
+| `--source` | local | Model source (`local` or `huggingface`) |
+| `--output` | text | Output format (`text` or `json`) |
 
 See [CONTRIBUTING.md](https://github.com/sudhanvalabs/mlship/blob/main/CONTRIBUTING.md) for custom pipeline documentation.
 
