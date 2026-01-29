@@ -67,12 +67,14 @@ def tensorflow_model() -> Path:
     X = np.random.rand(100, 4).astype(np.float32)
     y = np.random.randint(0, 2, 100)
 
-    model = tf.keras.Sequential([
-        tf.keras.layers.Dense(8, activation='relu', input_shape=(4,)),
-        tf.keras.layers.Dense(1, activation='sigmoid')
-    ])
+    model = tf.keras.Sequential(
+        [
+            tf.keras.layers.Dense(8, activation="relu", input_shape=(4,)),
+            tf.keras.layers.Dense(1, activation="sigmoid"),
+        ]
+    )
 
-    model.compile(optimizer='adam', loss='binary_crossentropy')
+    model.compile(optimizer="adam", loss="binary_crossentropy")
     model.fit(X, y, epochs=5, verbose=0)
 
     temp_file = tempfile.NamedTemporaryFile(suffix=".keras", delete=False)

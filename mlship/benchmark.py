@@ -155,7 +155,7 @@ def run_benchmark(
 
     try:
         if output_format == "text":
-            print(f"Server started. Running benchmark...\n")
+            print("Server started. Running benchmark...\n")
             print("=" * 50)
             print(f"Model: {model_path}")
             print(f"Framework: {framework}")
@@ -185,7 +185,7 @@ def run_benchmark(
 
         # Warmup
         if output_format == "text":
-            print(f"\nWarming up...")
+            print("\nWarming up...")
 
         for i in range(warmup):
             requests.post(predict_url, json=test_payload, timeout=30)
@@ -248,7 +248,7 @@ def run_benchmark(
             print("BENCHMARK RESULTS")
             print("=" * 50)
             print(f"\nCold Start:     {cold_start_duration*1000:.2f}ms")
-            print(f"\nPerformance Metrics:")
+            print("\nPerformance Metrics:")
             print(f"  Average:       {avg:.2f}ms")
             print(f"  Min:           {min_latency:.2f}ms")
             print(f"  P50 (Median):  {p50:.2f}ms")

@@ -363,7 +363,7 @@ def benchmark(
             click.echo(f"Failed to parse payload: {e}", err=True)
             click.echo()
             click.echo("Payload must be valid JSON, e.g.:", err=True)
-            click.echo('  --payload \'{"features": [1.0, 2.0, 3.0, 4.0]}\'', err=True)
+            click.echo("  --payload '{\"features\": [1.0, 2.0, 3.0, 4.0]}'", err=True)
             click.echo()
             sys.exit(1)
 

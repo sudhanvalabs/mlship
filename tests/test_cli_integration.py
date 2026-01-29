@@ -5,10 +5,8 @@ end-to-end functionality works correctly.
 """
 
 import json
-import multiprocessing
 import subprocess
 import time
-from pathlib import Path
 
 import pytest
 import requests
@@ -66,12 +64,14 @@ def tensorflow_model_file(tmp_path_factory):
     X = np.random.rand(100, 4).astype(np.float32)
     y = np.random.randint(0, 2, 100)
 
-    model = tf.keras.Sequential([
-        tf.keras.layers.Dense(8, activation='relu', input_shape=(4,)),
-        tf.keras.layers.Dense(1, activation='sigmoid')
-    ])
+    model = tf.keras.Sequential(
+        [
+            tf.keras.layers.Dense(8, activation="relu", input_shape=(4,)),
+            tf.keras.layers.Dense(1, activation="sigmoid"),
+        ]
+    )
 
-    model.compile(optimizer='adam', loss='binary_crossentropy')
+    model.compile(optimizer="adam", loss="binary_crossentropy")
     model.fit(X, y, epochs=5, verbose=0)
 
     model_path = tmp_path_factory.mktemp("models") / "tensorflow_model.keras"
@@ -89,12 +89,7 @@ class TestServeCommandCLI:
         if source == "huggingface":
             cmd.extend(["--source", "huggingface"])
 
-        proc = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True
-        )
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         return proc
 
     def wait_for_server(self, port, timeout=30):
@@ -123,7 +118,7 @@ class TestServeCommandCLI:
             response = requests.post(
                 f"http://127.0.0.1:{port}/predict",
                 json={"features": [1.0, 2.0, 3.0, 4.0]},
-                timeout=5
+                timeout=5,
             )
             assert response.status_code == 200
             assert "prediction" in response.json()
@@ -146,7 +141,7 @@ class TestServeCommandCLI:
             response = requests.post(
                 f"http://127.0.0.1:{port}/predict",
                 json={"features": [1.0, 2.0, 3.0, 4.0]},
-                timeout=5
+                timeout=5,
             )
             assert response.status_code == 200
             assert "prediction" in response.json()
@@ -169,7 +164,7 @@ class TestServeCommandCLI:
             response = requests.post(
                 f"http://127.0.0.1:{port}/predict",
                 json={"features": [0.5, 1.2, -0.3, 0.8]},
-                timeout=5
+                timeout=5,
             )
             assert response.status_code == 200
             assert "prediction" in response.json()
@@ -197,7 +192,7 @@ class TestServeCommandCLI:
             response = requests.post(
                 f"http://127.0.0.1:{port}/predict",
                 json={"features": "This is a test sentence."},
-                timeout=10
+                timeout=10,
             )
             assert response.status_code == 200
             assert "prediction" in response.json()
@@ -212,25 +207,27 @@ class TestServeCommandCLI:
 class TestBenchmarkCommandCLI:
     """Test mlship benchmark command via subprocess."""
 
-    def run_benchmark_command(self, model_path, port, requests=20, warmup=3,
-                             source="local", output="json"):
+    def run_benchmark_command(
+        self, model_path, port, requests=20, warmup=3, source="local", output="json"
+    ):
         """Run mlship benchmark command."""
         cmd = [
-            "mlship", "benchmark", str(model_path),
-            "--port", str(port),
-            "--requests", str(requests),
-            "--warmup", str(warmup),
-            "--output", output
+            "mlship",
+            "benchmark",
+            str(model_path),
+            "--port",
+            str(port),
+            "--requests",
+            str(requests),
+            "--warmup",
+            str(warmup),
+            "--output",
+            output,
         ]
         if source == "huggingface":
             cmd.extend(["--source", "huggingface"])
 
-        result = subprocess.run(
-            cmd,
-            capture_output=True,
-            text=True,
-            timeout=60
-        )
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
         return result
 
     def test_benchmark_sklearn_cli(self, sklearn_model_file):
@@ -289,12 +286,19 @@ class TestBenchmarkCommandCLI:
     def test_benchmark_custom_payload_cli(self, sklearn_model_file):
         """Test mlship benchmark with custom payload."""
         cmd = [
-            "mlship", "benchmark", str(sklearn_model_file),
-            "--port", "8205",
-            "--requests", "10",
-            "--warmup", "2",
-            "--output", "json",
-            "--payload", '{"features": [5.0, 6.0, 7.0, 8.0]}'
+            "mlship",
+            "benchmark",
+            str(sklearn_model_file),
+            "--port",
+            "8205",
+            "--requests",
+            "10",
+            "--warmup",
+            "2",
+            "--output",
+            "json",
+            "--payload",
+            '{"features": [5.0, 6.0, 7.0, 8.0]}',
         ]
 
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)

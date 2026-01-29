@@ -1,10 +1,7 @@
 """Tests for benchmarking functionality."""
 
 import json
-import tempfile
-from pathlib import Path
 
-import pytest
 from click.testing import CliRunner
 
 from mlship.cli import cli
