@@ -188,7 +188,7 @@ def run_benchmark(
             print(f"\nWarming up...")
 
         for i in range(warmup):
-            requests.post(predict_url, json=test_payload, timeout=10)
+            requests.post(predict_url, json=test_payload, timeout=30)
             if output_format == "text":
                 sys.stdout.write(f"\rWarmup: {i+1}/{warmup}")
                 sys.stdout.flush()
@@ -205,7 +205,7 @@ def run_benchmark(
 
         for i in range(num_requests):
             req_start = time.time()
-            response = requests.post(predict_url, json=test_payload, timeout=10)
+            response = requests.post(predict_url, json=test_payload, timeout=30)
             req_duration = (time.time() - req_start) * 1000  # Convert to ms
             latencies.append(req_duration)
 
